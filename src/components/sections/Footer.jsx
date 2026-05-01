@@ -16,11 +16,11 @@ const Footer = ({ about, lang }) => {
   return (
     <footer className="bg-primary-900 dark:bg-primary-50 relative overflow-hidden transition-colors scanlines">
       {/* Gradient top border */}
-      <div className="h-1 w-full bg-gradient-to-r from-primary-300 via-primary-500 to-primary-700 dark:from-primary-600 dark:via-primary-400 dark:to-primary-200" />
+
 
       {/* Dither background */}
       <div className="absolute inset-0 bg-dither pointer-events-none" />
-      <div className="section-stripe" />
+
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         {/* ── Top row ── */}

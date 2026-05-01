@@ -15,7 +15,7 @@ const ClientsSection = ({ testimonials, about, lang }) => {
       <div className="absolute inset-0 bg-dither pointer-events-none" />
       <div className="absolute inset-0 scanlines pointer-events-none" />
       {/* Left accent stripe */}
-      <div className="section-stripe" />
+
 
       {/* ── Heading row ── */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-14 flex flex-col sm:flex-row sm:items-end gap-6 relative z-10">

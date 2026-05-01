@@ -125,7 +125,7 @@ const PortfolioSection = ({ portfolio, lang }) => {
       className="py-24 bg-primary-50 dark:bg-primary-950 transition-colors relative overflow-hidden"
     >
       <div className="absolute inset-0 bg-pixel-grid pointer-events-none" />
-      <div className="absolute top-0 left-0 right-0 h-1 brut-divider" />
+
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
 

@@ -95,7 +95,7 @@ const ContactSection = ({
       className="py-24 bg-white dark:bg-primary-950 transition-colors relative overflow-hidden scanlines"
     >
       <div className="absolute inset-0 bg-pixel-grid pointer-events-none" />
-      <div className="section-stripe" />
+
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         <div className="contact-grid grid grid-cols-1 lg:grid-cols-5 gap-16 items-start">

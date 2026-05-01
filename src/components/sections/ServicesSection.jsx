@@ -531,7 +531,7 @@ const ServicesSection = ({ services, about, lang }) => {
                         </span>
                       )}
                     </span>
-                    <div className="spotlight-spec-box grid grid-cols-1 md:grid-cols-2 gap-3 items-start">
+                    <div className="spotlight-spec-box grid grid-cols-1 md:grid-cols-2 gap-3 items-start min-h-[240px]">
                       {spotlightItems.length > 0 ? (
                         spotlightItems
                           .slice(spotlightPage * ITEMS_PER_PAGE, (spotlightPage + 1) * ITEMS_PER_PAGE)
