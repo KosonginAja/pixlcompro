@@ -196,10 +196,12 @@ const Navbar = ({ about, lang }) => {
         </div>
       </div>
 
-      {/* ── Fixed bottom-right: Contact Us CTA ── */}
+      {/* ── Fixed bottom-right: Contact Us CTA — hide when mobile menu is open ── */}
       <a
         href="#contact"
-        className="fixed bottom-6 right-6 z-[100] brut-btn pixel-shift-hover shadow-[4px_4px_0_0_#004b74] dark:shadow-[4px_4px_0_0_#4c97d1]"
+        className={`fixed bottom-6 right-6 z-[100] brut-btn pixel-shift-hover shadow-[4px_4px_0_0_#004b74] dark:shadow-[4px_4px_0_0_#4c97d1] transition-all duration-300 ${
+          isMenuOpen ? "opacity-0 pointer-events-none translate-y-4" : "opacity-100 translate-y-0"
+        }`}
       >
         {isEn ? "Contact Us" : "Hubungi Kami"}
         <ArrowRight size={14} strokeWidth={3} />
