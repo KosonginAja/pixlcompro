@@ -107,13 +107,8 @@ const ServicesSection = ({ services, about, lang }) => {
   );
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const [showAllCategories, setShowAllCategories] = useState(false);
   const [spotlightPage, setSpotlightPage] = useState(0);
   const ITEMS_PER_PAGE = 4;
-
-  const visibleServices = showAllCategories
-    ? services
-    : services?.slice(0, 4) || [];
 
   const containerRef = useRef(null);
   const spotlightRef = useRef(null);
@@ -357,25 +352,25 @@ const ServicesSection = ({ services, about, lang }) => {
         </div>
 
         {/* ── Main Grid ── */}
-        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 items-start">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 items-stretch">
           {/* ── Sidebar: Categories ── */}
-          {/* sticky must be on the column wrapper — overflow-y on a separate inner div */}
-          <div className="lg:col-span-4 sticky top-20 self-start">
-            <div className="border-t-4 border-primary-500 pb-1">
+          <div className="lg:col-span-4 flex flex-col min-h-0">
+            <div className="border-t-4 border-primary-500 pb-1 shrink-0">
               <span className="text-xs font-bold text-primary-400 dark:text-primary-600 uppercase tracking-widest block py-4">
                 {isEn ? "CATEGORIES" : "KATEGORI"}
               </span>
             </div>
 
-            {/* Categories list (expands naturally via Show More) */}
-            <div className="service-grid flex flex-col gap-4 pt-2 pb-4">
-              {visibleServices.map((service, index) => {
+            {/* Categories list */}
+            <div className="service-grid flex flex-col gap-4 pt-2 pb-4 overflow-y-auto custom-scrollbar-left flex-1 min-h-0" style={{ direction: 'rtl', paddingLeft: '12px' }}>
+              {services.map((service, index) => {
                 const isActive = activeService?._id === service._id;
                 const style = catStyles[index % catStyles.length];
 
                 return (
                   <div
                     key={service._id}
+                    style={{ direction: 'ltr' }}
                     onClick={() => {
                       setActiveService(service);
                       setSelectedItem(null);
@@ -413,24 +408,6 @@ const ServicesSection = ({ services, about, lang }) => {
               })}
             </div>
 
-            {/* Show More Toggle Button */}
-            {services?.length > 4 && (
-              <button
-                onClick={() => setShowAllCategories(!showAllCategories)}
-                className="w-full brut-btn-outline justify-center border-t-0 shadow-[0_4px_0_0_#2c7cb6] dark:shadow-[0_4px_0_0_#4c97d1]"
-                style={{ paddingTop: "0.6rem", paddingBottom: "0.6rem" }}
-              >
-                <div className="text-xs font-semibold">
-                  {showAllCategories
-                    ? isEn
-                      ? "Hide Categories"
-                      : "Tutup Selengkapnya"
-                    : isEn
-                      ? `Show All (${services.length})`
-                      : `Selengkapnya (${services.length})`}
-                </div>
-              </button>
-            )}
           </div>
 
           {/* ── Spotlight Panel ── */}
