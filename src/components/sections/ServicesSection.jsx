@@ -108,6 +108,8 @@ const ServicesSection = ({ services, about, lang }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [showAllCategories, setShowAllCategories] = useState(false);
+  const [spotlightPage, setSpotlightPage] = useState(0);
+  const ITEMS_PER_PAGE = 4;
 
   const visibleServices = showAllCategories
     ? services
@@ -336,10 +338,7 @@ const ServicesSection = ({ services, about, lang }) => {
             <h2 className="text-5xl lg:text-7xl font-black text-primary-900 dark:text-primary-50 tracking-tight leading-none">
               {isEn ? "Digital" : "Keunggulan"}
               <br />
-              <span
-                className="glitch"
-                data-text={isEn ? "Excellence" : "Digital"}
-              >
+              <span>
                 {isEn ? "Excellence" : "Digital"}
               </span>
               <br />
@@ -380,6 +379,7 @@ const ServicesSection = ({ services, about, lang }) => {
                     onClick={() => {
                       setActiveService(service);
                       setSelectedItem(null);
+                      setSpotlightPage(0);
                     }}
                     className={`service-card border-[3px] cursor-pointer transition-all duration-300 relative flex flex-col justify-between min-h-[100px] ${style.pad} ${
                       isActive
@@ -521,33 +521,63 @@ const ServicesSection = ({ services, about, lang }) => {
                   {/* Divider */}
                   <div className="brut-divider mb-8" />
 
-                  {/* Spotlight Items — masonry-feel: odd items taller */}
+                  {/* Spotlight Items — paginated: max 4 per page */}
                   <div>
                     <span className="text-xs font-bold text-primary-400 dark:text-primary-500 uppercase tracking-widest block mb-4">
                       {isEn ? "ITEM SERVICES" : "ITEM LAYANAN"}
+                      {spotlightItems.length > ITEMS_PER_PAGE && (
+                        <span className="ml-2 text-primary-300 dark:text-primary-600 font-normal">
+                          ({spotlightPage * ITEMS_PER_PAGE + 1}–{Math.min((spotlightPage + 1) * ITEMS_PER_PAGE, spotlightItems.length)} of {spotlightItems.length})
+                        </span>
+                      )}
                     </span>
                     <div className="spotlight-spec-box grid grid-cols-1 md:grid-cols-2 gap-3 items-start">
                       {spotlightItems.length > 0 ? (
-                        spotlightItems.map((item, idx) => (
-                          <SpotlightItem
-                            key={idx}
-                            item={item}
-                            index={idx}
-                            isEn={isEn}
-                            onClick={(it, id) => {
-                              setSelectedItem(it);
-                              setSelectedIndex(id);
-                            }}
-                          />
-                        ))
+                        spotlightItems
+                          .slice(spotlightPage * ITEMS_PER_PAGE, (spotlightPage + 1) * ITEMS_PER_PAGE)
+                          .map((item, idx) => (
+                            <SpotlightItem
+                              key={spotlightPage * ITEMS_PER_PAGE + idx}
+                              item={item}
+                              index={spotlightPage * ITEMS_PER_PAGE + idx}
+                              isEn={isEn}
+                              onClick={(it, id) => {
+                                setSelectedItem(it);
+                                setSelectedIndex(id);
+                              }}
+                            />
+                          ))
                       ) : (
                         <div className="md:col-span-2 border-2 border-dashed border-primary-200 dark:border-primary-700 p-8 text-center">
-                          <p className="text-primary-300 dark:text-primary-600 text-xs font-pixel uppercase tracking-widest">
+                          <p className="text-primary-300 dark:text-primary-600 text-xs uppercase tracking-widest">
                             {isEn ? "Specs Coming Soon" : "Spek Segera Hadir"}
                           </p>
                         </div>
                       )}
                     </div>
+
+                    {/* Pagination buttons */}
+                    {spotlightItems.length > ITEMS_PER_PAGE && (
+                      <div className="flex items-center justify-end gap-2 mt-4">
+                        <button
+                          onClick={() => setSpotlightPage(p => Math.max(0, p - 1))}
+                          disabled={spotlightPage === 0}
+                          className="px-3 py-1.5 border-2 border-primary-400 text-primary-600 dark:text-primary-300 text-xs font-bold uppercase tracking-wider hover:bg-primary-500 hover:text-white hover:border-primary-500 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                        >
+                          ← {isEn ? "Prev" : "Sebelum"}
+                        </button>
+                        <span className="text-xs text-primary-400 font-semibold">
+                          {spotlightPage + 1} / {Math.ceil(spotlightItems.length / ITEMS_PER_PAGE)}
+                        </span>
+                        <button
+                          onClick={() => setSpotlightPage(p => Math.min(Math.ceil(spotlightItems.length / ITEMS_PER_PAGE) - 1, p + 1))}
+                          disabled={spotlightPage >= Math.ceil(spotlightItems.length / ITEMS_PER_PAGE) - 1}
+                          className="px-3 py-1.5 border-2 border-primary-400 text-primary-600 dark:text-primary-300 text-xs font-bold uppercase tracking-wider hover:bg-primary-500 hover:text-white hover:border-primary-500 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                        >
+                          {isEn ? "Next" : "Berikut"} →
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
 

@@ -9,7 +9,7 @@ const ClientsSection = ({ testimonials, about, lang }) => {
   return (
     <section
       id="client"
-      className="bg-primary-900 dark:bg-primary-50 relative overflow-hidden border-t-4 border-primary-500 dark:border-primary-400 transition-colors"
+      className="bg-primary-900 dark:bg-primary-50 relative overflow-hidden transition-colors"
     >
       {/* Dither & scanlines */}
       <div className="absolute inset-0 bg-dither pointer-events-none" />
@@ -38,7 +38,7 @@ const ClientsSection = ({ testimonials, about, lang }) => {
       </div>
 
       {/* ── Ticker strip: logo + name ── */}
-      <div className="border-t-4 border-b-4 border-primary-700 dark:border-primary-300 py-4 overflow-hidden relative">
+      <div className="py-4 overflow-hidden relative border-y border-primary-700/40 dark:border-primary-300/40">
         {/* Fade masks */}
         <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-primary-900 dark:from-primary-50 to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-primary-900 dark:from-primary-50 to-transparent z-10 pointer-events-none" />

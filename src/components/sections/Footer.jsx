@@ -127,7 +127,7 @@ const Footer = ({ about, lang }) => {
         {/* ── Bottom row ── */}
         <div className="py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p
-            className="text-xs font-semibold text-primary-600 dark:text-primary-400 uppercase tracking-widest glitch-subtle"
+            className="text-xs font-semibold text-primary-600 dark:text-primary-400 uppercase tracking-widest"
             data-text={`© ${year} PixlCraft Studio. All rights reserved.`}
           >
             © {year} PixlCraft Studio. All rights reserved.

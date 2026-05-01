@@ -141,7 +141,7 @@ const AboutSection = ({ about, lang }) => {
           <div className="absolute inset-0 bg-dither pointer-events-none opacity-50 dark:opacity-20" />
           <div className="relative z-10 flex flex-col lg:flex-row gap-12 items-center justify-between">
             <div className="lg:w-1/3 text-center lg:text-left">
-              <h3 className="text-3xl lg:text-5xl font-black text-white dark:text-primary-100 tracking-tighter uppercase mb-6 glitch-subtle" data-text={isEn ? "The Impact We Create" : "Dampak Yang Kami Berikan"}>
+              <h3 className="text-3xl lg:text-5xl font-black text-white dark:text-primary-100 tracking-tighter uppercase mb-6">
                 {isEn ? "The Impact We Create" : "Dampak Yang Kami Berikan"}
               </h3>
               <a href="#portfolio" className="brut-btn pixel-shift-hover text-[10px] mt-4 inline-flex">

@@ -1,11 +1,14 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useRef, useMemo } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { supabase } from "../../lib/supabase";
 import { ArrowUpRight, Box, Filter } from "lucide-react";
 
 /* ── Single Portfolio Card ── */
-const PortfolioCard = ({ p, isEn, isFeatured = false }) => (
+const PortfolioCard = ({ p, isEn, isFeatured = false }) => {
+  const overlayRef = useRef(null);
+
+  return (
   <div
     className={`group border-[3px] border-primary-400 dark:border-primary-500 bg-primary-50 dark:bg-primary-900 overflow-hidden cursor-pointer transition-all duration-300
       hover:shadow-[8px_8px_0_0_#2c7cb6] dark:hover:shadow-[6px_6px_0_0_#4c97d1]
@@ -13,8 +16,10 @@ const PortfolioCard = ({ p, isEn, isFeatured = false }) => (
       ${isFeatured ? "shadow-[6px_6px_0_0_#004b74] dark:shadow-[6px_6px_0_0_#4c97d1]" : "shadow-[4px_4px_0_0_#2c7cb6] dark:shadow-[4px_4px_0_0_#2c7cb6]"}
     `}
     onClick={() => p.url && window.open(p.url.startsWith("http") ? p.url : `https://${p.url}`, "_blank")}
+    onMouseEnter={() => { if (overlayRef.current) overlayRef.current.style.clipPath = "circle(150% at 50% 50%)"; }}
+    onMouseLeave={() => { if (overlayRef.current) overlayRef.current.style.clipPath = "circle(0% at 50% 50%)"; }}
   >
-    {/* Image container with clip-path morph on hover */}
+    {/* Image container */}
     <div className={`relative overflow-hidden ${isFeatured ? "aspect-[16/7]" : "aspect-[16/10]"}`}>
       {p.image ? (
         <img
@@ -32,24 +37,19 @@ const PortfolioCard = ({ p, isEn, isFeatured = false }) => (
         </div>
       )}
 
-      {/* Hover overlay: expands from bottom-left via clip-path */}
+      {/* Hover overlay */}
       <div
-        className="absolute inset-0 bg-primary-800/90 dark:bg-primary-900/90 flex flex-col items-center justify-center gap-3 z-20 transition-all duration-500"
+        ref={overlayRef}
+        className="absolute inset-0 bg-primary-800/90 dark:bg-primary-900/90 flex flex-col items-center justify-center gap-3 z-20 pointer-events-none"
         style={{
-          clipPath: "circle(0% at 0% 100%)",
-          transition: "clip-path 0.5s cubic-bezier(0.77, 0, 0.175, 1)",
-        }}
-        onMouseEnter={e => {
-          e.currentTarget.style.clipPath = "circle(150% at 0% 100%)";
-        }}
-        onMouseLeave={e => {
-          e.currentTarget.style.clipPath = "circle(0% at 0% 100%)";
+          clipPath: "circle(0% at 50% 50%)",
+          transition: "clip-path 0.45s cubic-bezier(0.77, 0, 0.175, 1)",
         }}
       >
-        <div className="border-2 border-primary-300 w-12 h-12 flex items-center justify-center">
-          <ArrowUpRight size={18} className="text-primary-200" />
+        <div className="border-2 border-primary-300 w-14 h-14 flex items-center justify-center">
+          <ArrowUpRight size={22} className="text-white" />
         </div>
-        <span className="text-xs font-semibold text-primary-300 tracking-widest uppercase border border-primary-500/40 px-3 py-1.5">
+        <span className="text-xs font-bold text-white tracking-widest uppercase border border-primary-400/60 px-4 py-1.5 bg-primary-700/50">
           {isEn ? "View Project" : "Lihat Proyek"}
         </span>
       </div>
@@ -72,7 +72,8 @@ const PortfolioCard = ({ p, isEn, isFeatured = false }) => (
       )}
     </div>
   </div>
-);
+  );
+};
 
 /* ── Main Component ── */
 const PortfolioSection = ({ portfolio, lang }) => {

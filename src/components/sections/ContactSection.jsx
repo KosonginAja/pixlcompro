@@ -92,7 +92,7 @@ const ContactSection = ({
     <section
       ref={containerRef}
       id="contact"
-      className="py-24 bg-white dark:bg-primary-950 transition-colors border-t-2 border-primary-200 dark:border-primary-700 relative overflow-hidden scanlines"
+      className="py-24 bg-white dark:bg-primary-950 transition-colors relative overflow-hidden scanlines"
     >
       <div className="absolute inset-0 bg-pixel-grid pointer-events-none" />
       <div className="section-stripe" />
