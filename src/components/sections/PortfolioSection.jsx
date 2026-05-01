@@ -49,7 +49,7 @@ const PortfolioCard = ({ p, isEn, isFeatured = false }) => (
         <div className="border-2 border-primary-300 w-12 h-12 flex items-center justify-center">
           <ArrowUpRight size={18} className="text-primary-200" />
         </div>
-        <span className="font-pixel text-[8px] text-primary-300 tracking-widest uppercase border border-primary-500/40 px-3 py-1.5">
+        <span className="text-xs font-semibold text-primary-300 tracking-widest uppercase border border-primary-500/40 px-3 py-1.5">
           {isEn ? "View Project" : "Lihat Proyek"}
         </span>
       </div>
@@ -198,7 +198,7 @@ const PortfolioSection = ({ portfolio, lang }) => {
               onClick={() => setVisibleLimit(v => v + 6)}
               className="brut-btn pixel-shift-hover"
             >
-              <span className="font-pixel text-[9px]">
+              <span className="text-xs font-bold">
                 {isEn ? "Load More" : "Tampilkan Lagi"}
               </span>
               <Filter size={14} strokeWidth={3} />

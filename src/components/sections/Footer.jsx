@@ -74,7 +74,7 @@ const Footer = ({ about, lang }) => {
 
           {/* Nav links */}
           <div>
-            <span className="font-pixel text-[9px] text-primary-500 dark:text-primary-400 uppercase tracking-widest mb-5 block">
+            <span className="text-xs font-bold text-primary-500 dark:text-primary-400 uppercase tracking-widest mb-5 block">
               {isEn ? "Navigation" : "Navigasi"}
             </span>
             <ul className="space-y-3">
@@ -94,7 +94,7 @@ const Footer = ({ about, lang }) => {
 
           {/* Contact quick */}
           <div>
-            <span className="font-pixel text-[9px] text-primary-500 dark:text-primary-400 uppercase tracking-widest mb-5 block">
+            <span className="text-xs font-bold text-primary-500 dark:text-primary-400 uppercase tracking-widest mb-5 block">
               {isEn ? "Get In Touch" : "Hubungi Kami"}
             </span>
             <div className="space-y-4">
@@ -116,7 +116,7 @@ const Footer = ({ about, lang }) => {
                 className="inline-block mt-4 brut-btn text-[9px] pixel-shift-hover"
                 style={{ padding: "0.6rem 1.25rem" }}
               >
-                <span className="font-pixel text-[8px]">
+                <span className="text-xs font-semibold">
                   {isEn ? "Start a Project" : "Mulai Proyek"}
                 </span>
               </a>
@@ -127,7 +127,7 @@ const Footer = ({ about, lang }) => {
         {/* ── Bottom row ── */}
         <div className="py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p
-            className="font-pixel text-[8px] text-primary-600 dark:text-primary-400 uppercase tracking-widest glitch-subtle"
+            className="text-xs font-semibold text-primary-600 dark:text-primary-400 uppercase tracking-widest glitch-subtle"
             data-text={`© ${year} PixlCraft Studio. All rights reserved.`}
           >
             © {year} PixlCraft Studio. All rights reserved.

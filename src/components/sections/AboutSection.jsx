@@ -63,7 +63,7 @@ const AboutSection = ({ about, lang }) => {
             {/* Year badge — offset out of frame */}
             <div className="absolute -bottom-4 -right-2 lg:-bottom-6 lg:-right-6 bg-primary-600 border-4 border-primary-300 dark:border-primary-700 px-5 py-3 lg:px-6 lg:py-4 shadow-[5px_5px_0_0_#004b74] rotate-2">
               <div className="font-pixel text-white text-xl lg:text-2xl leading-none">{about.founded || "2015"}</div>
-              <div className="font-pixel text-primary-200 text-[8px] uppercase tracking-widest mt-1">
+              <div className="text-primary-200 text-[10px] uppercase tracking-widest mt-1 font-semibold">
                 {isEn ? "Est." : "Berdiri"}
               </div>
             </div>
@@ -104,7 +104,7 @@ const AboutSection = ({ about, lang }) => {
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-12 bg-primary-500 border-2 border-primary-300 flex items-center justify-center">
-                  <span className="font-pixel text-white text-[10px]">01</span>
+                  <span className="text-white text-[11px] font-bold">01</span>
                 </div>
                 <span className="text-2xl lg:text-3xl font-black text-primary-900 dark:text-primary-50 uppercase tracking-tight">
                   {isEn ? "Vision" : "Visi"}
@@ -121,7 +121,7 @@ const AboutSection = ({ about, lang }) => {
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-12 bg-primary-700 dark:bg-primary-200 border-2 border-primary-500 flex items-center justify-center">
-                  <span className="font-pixel text-white dark:text-primary-900 text-[10px]">02</span>
+                  <span className="text-white dark:text-primary-900 text-[11px] font-bold">02</span>
                 </div>
                 <span className="text-2xl lg:text-3xl font-black text-primary-900 dark:text-primary-50 uppercase tracking-tight">
                   {isEn ? "Mission" : "Misi"}
@@ -145,7 +145,7 @@ const AboutSection = ({ about, lang }) => {
                 {isEn ? "The Impact We Create" : "Dampak Yang Kami Berikan"}
               </h3>
               <a href="#portfolio" className="brut-btn pixel-shift-hover text-[10px] mt-4 inline-flex">
-                <span className="font-pixel text-[9px]">
+                <span className="text-[11px] font-bold tracking-wide">
                   {isEn ? "See Our Portfolio" : "Lihat Portofolio"}
                 </span>
                 <ArrowRight size={14} strokeWidth={3} />
@@ -161,7 +161,7 @@ const AboutSection = ({ about, lang }) => {
                 <div className="text-5xl lg:text-6xl font-black text-white dark:text-primary-50 mb-3 relative z-10">
                   <AnimatedCounter value={about.clients || "500+"} />
                 </div>
-                <div className="font-pixel text-[9px] text-primary-300 dark:text-primary-400 uppercase tracking-widest">
+                <div className="text-sm font-semibold uppercase tracking-widest text-primary-300 dark:text-primary-400">
                   {isEn ? "Global Clients" : "Klien Global"}
                 </div>
               </div>
@@ -174,7 +174,7 @@ const AboutSection = ({ about, lang }) => {
                 <div className="text-5xl lg:text-6xl font-black text-white dark:text-primary-50 mb-3 relative z-10">
                   <AnimatedCounter value={about.projects || "1000+"} />
                 </div>
-                <div className="font-pixel text-[9px] text-primary-400 dark:text-primary-500 uppercase tracking-widest">
+                <div className="text-sm font-semibold uppercase tracking-widest text-primary-400 dark:text-primary-500">
                   {isEn ? "Projects Completed" : "Proyek Selesai"}
                 </div>
               </div>

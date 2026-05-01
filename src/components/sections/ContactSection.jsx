@@ -129,7 +129,7 @@ const ContactSection = ({
                   rel="noreferrer"
                   className="contact-link flex items-center gap-4 group border-b-2 border-primary-100 dark:border-primary-800 pb-4 hover:border-primary-400 transition-all accent-line"
                 >
-                  <span className="font-pixel text-[9px] text-primary-500 shrink-0 w-14">
+                  <span className="text-xs font-bold text-primary-500 shrink-0 w-14">
                     {prefix}
                   </span>
                   <div>
@@ -159,7 +159,7 @@ const ContactSection = ({
           >
             <div className="border-4 border-primary-400 dark:border-primary-500 shadow-[8px_8px_0_0_#004b74] dark:shadow-[8px_8px_0_0_#4c97d1] bg-primary-50 dark:bg-primary-900 p-8 lg:p-10">
               <div className="border-b-2 border-primary-100 dark:border-primary-700 pb-6 mb-8">
-                <span className="font-pixel text-[9px] text-primary-400 dark:text-primary-500 uppercase tracking-widest">
+                <span className="text-xs font-bold text-primary-400 dark:text-primary-500 uppercase tracking-widest">
                   {isEn ? "Send a message" : "Kirim pesan"}
                 </span>
               </div>
@@ -180,7 +180,7 @@ const ContactSection = ({
               <form onSubmit={handleContactSubmit} className="space-y-8">
                 {formFields.map(({ label, key, type, placeholder }) => (
                   <div key={key} className="form-field group">
-                    <label className="block font-pixel text-[8px] text-primary-500 dark:text-primary-400 uppercase tracking-widest mb-3">
+                    <label className="block text-xs font-semibold text-primary-500 dark:text-primary-400 uppercase tracking-widest mb-3">
                       {label}
                     </label>
                     <input
@@ -201,7 +201,7 @@ const ContactSection = ({
 
                 {/* Message */}
                 <div className="form-field">
-                  <label className="block font-pixel text-[8px] text-primary-500 dark:text-primary-400 uppercase tracking-widest mb-3">
+                  <label className="block text-xs font-semibold text-primary-500 dark:text-primary-400 uppercase tracking-widest mb-3">
                     {isEn ? "Message" : "Pesan"}
                   </label>
                   <textarea
@@ -228,7 +228,7 @@ const ContactSection = ({
                   disabled={loading}
                   className="w-full brut-btn justify-center disabled:opacity-50 disabled:cursor-not-allowed pixel-shift-hover"
                 >
-                  <span className="font-pixel text-[9px]">
+                  <span className="text-xs font-bold">
                     {loading
                       ? isEn
                         ? "Sending..."

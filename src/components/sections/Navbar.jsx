@@ -88,7 +88,7 @@ const Navbar = ({ about, lang }) => {
               <a
                 key={i}
                 href={item.href}
-                className={`font-pixel text-[9px] uppercase tracking-widest transition-colors accent-line ${
+                className={`text-[13px] font-semibold uppercase tracking-widest transition-colors accent-line ${
                   scrolled
                     ? "text-primary-200 dark:text-primary-700 hover:text-primary-300 dark:hover:text-primary-500"
                     : "text-primary-700 dark:text-primary-300 hover:text-primary-500"
@@ -99,26 +99,26 @@ const Navbar = ({ about, lang }) => {
             ))}
           </div>
 
-          {/* Right controls */}
+          {/* Right controls — order: CTA, then Language */}
           <div className="flex items-center gap-2">
-            <a
-              href={isEn ? "/id" : "/"}
-              className={`flex items-center gap-1.5 px-3 py-1.5 border-2 text-[9px] font-black uppercase tracking-wider transition-all pixel-shift-hover ${
-                scrolled
-                  ? "border-primary-400 text-primary-200 dark:text-primary-700 dark:border-primary-600 hover:bg-primary-500 hover:text-white hover:border-primary-500"
-                  : "border-primary-400 text-primary-600 dark:text-primary-300 hover:bg-primary-500 hover:text-white"
-              }`}
-            >
-              <Globe size={12} strokeWidth={2.5} />
-              {isEn ? "ID" : "EN"}
-            </a>
-
             <a
               href="#contact"
               className="hidden sm:flex brut-btn text-[9px] pixel-shift-hover"
             >
               {isEn ? "Contact Us" : "Hubungi"}
               <ArrowRight size={12} strokeWidth={3} />
+            </a>
+
+            <a
+              href={isEn ? "/id" : "/"}
+              className={`flex items-center gap-1.5 px-3 py-1.5 border-2 text-[11px] font-bold uppercase tracking-wider transition-all pixel-shift-hover ${
+                scrolled
+                  ? "border-primary-400 text-primary-200 dark:text-primary-700 dark:border-primary-600 hover:bg-primary-500 hover:text-white hover:border-primary-500"
+                  : "border-primary-400 text-primary-600 dark:text-primary-300 hover:bg-primary-500 hover:text-white"
+              }`}
+            >
+              <Globe size={12} strokeWidth={2.5} />
+              {isEn ? "EN" : "ID"}
             </a>
 
             {/* Hamburger */}

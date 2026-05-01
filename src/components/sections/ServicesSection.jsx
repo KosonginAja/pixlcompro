@@ -32,7 +32,7 @@ const SpotlightItem = ({ item, index, isEn, onClick }) => {
       </div>
       <div className="flex-1 min-w-0 pt-0.5">
         {item.label && (
-          <div className="font-pixel text-[8px] text-primary-500 dark:text-primary-400 uppercase tracking-widest mb-1.5">
+          <div className="text-xs font-semibold text-primary-500 dark:text-primary-400 uppercase tracking-widest mb-1.5">
             {item.label}
           </div>
         )}
@@ -363,7 +363,7 @@ const ServicesSection = ({ services, about, lang }) => {
           {/* sticky must be on the column wrapper — overflow-y on a separate inner div */}
           <div className="lg:col-span-4 sticky top-20 self-start">
             <div className="border-t-4 border-primary-500 pb-1">
-              <span className="font-pixel text-[9px] text-primary-400 dark:text-primary-600 uppercase tracking-widest block py-4">
+              <span className="text-xs font-bold text-primary-400 dark:text-primary-600 uppercase tracking-widest block py-4">
                 {isEn ? "CATEGORIES" : "KATEGORI"}
               </span>
             </div>
@@ -388,7 +388,7 @@ const ServicesSection = ({ services, about, lang }) => {
                     } pixel-shift-hover`}
                   >
                     <div
-                      className={`font-pixel text-[9px] mb-2 ${isActive ? "text-primary-200" : "text-primary-400 dark:text-primary-500"}`}
+                      className={`text-xs font-bold mb-2 ${isActive ? "text-primary-200" : "text-primary-400 dark:text-primary-500"}`}
                     >
                       {(index + 1).toString().padStart(2, "0")}
                     </div>
@@ -399,7 +399,7 @@ const ServicesSection = ({ services, about, lang }) => {
                         {isEn ? service.titleEn : service.titleId}
                       </h4>
                       <div
-                        className={`flex items-center gap-1.5 font-pixel text-[8px] uppercase tracking-widest ${isActive ? "text-primary-200" : "text-primary-500 dark:text-primary-400"}`}
+                        className={`flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest ${isActive ? "text-primary-200" : "text-primary-500 dark:text-primary-400"}`}
                       >
                         {isEn ? "Explore" : "Pilih"}{" "}
                         <ArrowRight size={10} strokeWidth={3} />
@@ -420,7 +420,7 @@ const ServicesSection = ({ services, about, lang }) => {
                 className="w-full brut-btn-outline justify-center border-t-0 shadow-[0_4px_0_0_#2c7cb6] dark:shadow-[0_4px_0_0_#4c97d1]"
                 style={{ paddingTop: "0.6rem", paddingBottom: "0.6rem" }}
               >
-                <div className="font-pixel text-[8px]">
+                <div className="text-xs font-semibold">
                   {showAllCategories
                     ? isEn
                       ? "Hide Categories"
@@ -460,7 +460,7 @@ const ServicesSection = ({ services, about, lang }) => {
                     <span className="brut-label text-primary-600 dark:text-primary-300 border-primary-500 text-[8px]">
                       {">"} {isEn ? "FEATURED SOLUTION" : "SOLUSI UTAMA"}
                     </span>
-                    <span className="font-pixel text-[8px] text-primary-300 dark:text-primary-600 uppercase mt-1">
+                    <span className="text-xs font-semibold text-primary-300 dark:text-primary-600 uppercase mt-1">
                       {isEn
                         ? currentSpotlight.categoryEn
                         : currentSpotlight.categoryId}
@@ -504,14 +504,14 @@ const ServicesSection = ({ services, about, lang }) => {
 
                   {/* CTA — slightly indented, with decorative pixel dash before */}
                   <div className="spotlight-cta flex items-center gap-5 mb-8">
-                    <div className="font-pixel text-[9px] text-primary-400 select-none">
+                    <div className="text-xs font-bold text-primary-400 select-none">
                       ——
                     </div>
                     <button
                       onClick={() => handleOrderNow(currentSpotlight)}
                       className="brut-btn"
                     >
-                      <span className="font-pixel text-[9px]">
+                      <span className="text-xs font-bold">
                         {isEn ? "Get Started" : "Hubungi Kami"}
                       </span>
                       <ArrowRight size={14} strokeWidth={3} />
@@ -523,7 +523,7 @@ const ServicesSection = ({ services, about, lang }) => {
 
                   {/* Spotlight Items — masonry-feel: odd items taller */}
                   <div>
-                    <span className="font-pixel text-[9px] text-primary-400 dark:text-primary-500 uppercase tracking-widest block mb-4">
+                    <span className="text-xs font-bold text-primary-400 dark:text-primary-500 uppercase tracking-widest block mb-4">
                       {isEn ? "ITEM SERVICES" : "ITEM LAYANAN"}
                     </span>
                     <div className="spotlight-spec-box grid grid-cols-1 md:grid-cols-2 gap-3 items-start">
@@ -594,14 +594,14 @@ const ServicesSection = ({ services, about, lang }) => {
                           }
                           className="brut-btn"
                         >
-                          <span className="font-pixel text-[9px]">
+                          <span className="text-xs font-bold">
                             {isEn ? "Inquire" : "Tanya Detail"}
                           </span>
                           <ArrowRight size={14} strokeWidth={3} />
                         </button>
                         <button
                           onClick={() => setSelectedItem(null)}
-                          className="font-pixel text-[9px] text-primary-400 hover:text-primary-600 uppercase tracking-widest transition-colors"
+                          className="text-xs font-bold text-primary-400 hover:text-primary-600 uppercase tracking-widest transition-colors"
                         >
                           ← {isEn ? "Back" : "Kembali"}
                         </button>

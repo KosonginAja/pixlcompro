@@ -96,11 +96,11 @@ const ClientsSection = ({ testimonials, about, lang }) => {
 
       {/* ── Bottom CTA strip ── */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-8 flex items-center justify-between gap-4 relative z-10">
-        <span className="font-pixel text-[8px] text-primary-600 dark:text-primary-400 uppercase tracking-widest">
+        <span className="text-xs font-semibold text-primary-600 dark:text-primary-400 uppercase tracking-widest">
           {about?.clients || `${clients.length}+`} {isEn ? "Partners Worldwide" : "Mitra di Seluruh Dunia"}
         </span>
         <a href="#contact" className="brut-btn pixel-shift-hover">
-          <span className="font-pixel text-[9px]">
+          <span className="text-xs font-bold">
             {isEn ? "Work With Us" : "Bekerja Sama"}
           </span>
         </a>
