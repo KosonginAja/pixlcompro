@@ -1,0 +1,483 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Blue palette ── */
+  --color-primary-50:  #e7f2ff;
+  --color-primary-100: #cde5ff;
+  --color-primary-200: #94ccff;
+  --color-primary-300: #69b1ee;
+  --color-primary-400: #4c97d1;
+  --color-primary-500: #2c7cb6;
+  --color-primary-600: #006399;
+  --color-primary-700: #004b74;
+  --color-primary-800: #003352;
+  --color-primary-900: #001d32;
+  --color-primary-950: #000000;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+/* ======================================
+   BASE
+   ====================================== */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+html, body {
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: #e7f2ff;
+  
+  /* Universal dot pattern to remove plainness */
+  background-image: radial-gradient(rgba(44, 124, 182, 0.2) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: 0 0;
+
+  color: #001d32;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+.dark body {
+  background-color: #001d32;
+  /* Very subtle dots for dark mode */
+  background-image: radial-gradient(rgba(76, 151, 209, 0.06) 1px, transparent 1px);
+  color: #cde5ff; /* Softened from #e7f2ff to prevent heavy halation / eye strain */
+}
+
+/* ── Smooth global dark/light transition ── */
+*, *::before, *::after {
+  transition:
+    background-color 0.35s ease,
+    border-color     0.35s ease,
+    color            0.25s ease,
+    box-shadow       0.25s ease;
+}
+/* Don't override animation-specific transitions */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
+
+/* ======================================
+   FONT UTILITIES
+   ====================================== */
+.font-pixel {
+  font-family: "Press Start 2P", cursive;
+  letter-spacing: -0.5px;
+}
+
+/* ======================================
+   NEO-BRUTALISM DESIGN SYSTEM
+   ====================================== */
+
+/* ── Card base ── */
+.brut-card {
+  border: 2px solid #2c7cb6;
+  box-shadow: 4px 4px 0 0 #004b74;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.brut-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 #004b74;
+}
+.dark .brut-card {
+  border-color: #4c97d1;
+  box-shadow: 4px 4px 0 0 #69b1ee;
+}
+.dark .brut-card:hover {
+  box-shadow: 6px 6px 0 0 #69b1ee;
+}
+
+/* ── Card accent (stronger) ── */
+.brut-card-accent {
+  border: 2px solid #006399;
+  box-shadow: 5px 5px 0 0 #2c7cb6;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.brut-card-accent:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 0 #2c7cb6;
+}
+
+/* ── Primary button ── */
+.brut-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  border: 2px solid #001d32;
+  box-shadow: 3px 3px 0 0 #004b74;
+  background: #2c7cb6;
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  cursor: pointer;
+}
+.brut-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 0 #004b74;
+  background: #006399;
+}
+.brut-btn:active {
+  transform: translate(0, 0);
+  box-shadow: 1px 1px 0 0 #004b74;
+}
+.dark .brut-btn {
+  background: #4c97d1;
+  color: #001d32;
+  border-color: #003352;
+  box-shadow: 3px 3px 0 0 #69b1ee;
+}
+.dark .brut-btn:hover {
+  background: #69b1ee;
+  box-shadow: 5px 5px 0 0 #69b1ee;
+}
+
+/* ── Outline button ── */
+.brut-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  border: 2px solid #2c7cb6;
+  box-shadow: 3px 3px 0 0 #2c7cb6;
+  background: transparent;
+  color: #2c7cb6;
+  font-weight: 900;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: all 0.12s ease;
+  cursor: pointer;
+}
+.brut-btn-outline:hover {
+  background: #2c7cb6;
+  color: #ffffff;
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 0 #004b74;
+}
+.dark .brut-btn-outline {
+  border-color: #4c97d1;
+  color: #4c97d1;
+  box-shadow: 3px 3px 0 0 #4c97d1;
+}
+.dark .brut-btn-outline:hover {
+  background: #4c97d1;
+  color: #001d32;
+  box-shadow: 5px 5px 0 0 #69b1ee;
+}
+
+/* ── Section label (pixel font pill) ── */
+.brut-label {
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: 2px solid currentColor;
+  padding: 0.3rem 0.7rem;
+  display: inline-block;
+}
+
+/* ── Neo tag / chip ── */
+.neo-tag {
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: #cde5ff;
+  border: 1.5px solid #2c7cb6;
+  color: #004b74;
+  padding: 0.25rem 0.6rem;
+  display: inline-block;
+}
+.dark .neo-tag {
+  background: #003352;
+  border-color: #4c97d1;
+  color: #94ccff;
+}
+
+/* ── Section divider ── */
+.brut-divider {
+  height: 3px;
+  background: linear-gradient(90deg, #4c97d1, #2c7cb6, #004b74);
+  width: 100%;
+}
+.dark .brut-divider {
+  background: linear-gradient(90deg, #94ccff, #4c97d1, #2c7cb6);
+}
+
+/* ======================================
+   PIXEL GRID BACKGROUND
+   ====================================== */
+.bg-pixel-grid {
+  background-size: 32px 32px;
+  background-image:
+    linear-gradient(to right, rgba(44, 124, 182, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(44, 124, 182, 0.15) 1px, transparent 1px);
+}
+.dark .bg-pixel-grid {
+  background-image:
+    linear-gradient(to right, rgba(76, 151, 209, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(76, 151, 209, 0.05) 1px, transparent 1px);
+}
+
+/* ======================================
+   PIXEL DITHER BACKGROUND
+   ====================================== */
+.bg-dither {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect x='0' y='0' width='1' height='1' fill='rgba(44,124,182,0.20)'/%3E%3Crect x='2' y='2' width='1' height='1' fill='rgba(44,124,182,0.20)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+.dark .bg-dither {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect x='0' y='0' width='1' height='1' fill='rgba(76,151,209,0.06)'/%3E%3Crect x='2' y='2' width='1' height='1' fill='rgba(76,151,209,0.06)'/%3E%3C/svg%3E");
+}
+
+/* ======================================
+   SCANLINE OVERLAY
+   ====================================== */
+.scanlines {
+  position: relative;
+}
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 29, 50, 0.025) 3px,
+    rgba(0, 29, 50, 0.025) 4px
+  );
+  pointer-events: none;
+  z-index: 5;
+}
+.dark .scanlines::after {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0,0,0,0.06) 3px,
+    rgba(0,0,0,0.06) 4px
+  );
+}
+
+/* ======================================
+   GLITCH EFFECT
+   ====================================== */
+@keyframes glitch1 {
+  0%, 90%, 100% { clip-path: inset(50% 0 30% 0); transform: translate(-3px, 0); opacity: 0; }
+  92%            { clip-path: inset(10% 0 80% 0); transform: translate(3px, 0);  opacity: 1; }
+  94%            { clip-path: inset(60% 0 20% 0); transform: translate(-2px, 0); opacity: 1; }
+  96%            { clip-path: inset(30% 0 50% 0); transform: translate(2px, 0);  opacity: 1; }
+  98%            { clip-path: inset(80% 0 5%  0); transform: translate(-3px, 0); opacity: 1; }
+}
+
+@keyframes glitch2 {
+  0%, 88%, 100% { clip-path: inset(20% 0 60% 0); transform: translate(3px, 0);  opacity: 0; }
+  90%            { clip-path: inset(75% 0 10% 0); transform: translate(-3px, 0); opacity: 1; }
+  93%            { clip-path: inset(5%  0 75% 0); transform: translate(2px, 0);  opacity: 1; }
+  95%            { clip-path: inset(45% 0 35% 0); transform: translate(-2px, 0); opacity: 1; }
+  97%            { clip-path: inset(15% 0 65% 0); transform: translate(3px, 0);  opacity: 1; }
+}
+
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+}
+.glitch::before {
+  color: #69b1ee;
+  animation: glitch1 4s infinite;
+  text-shadow: none;
+}
+.glitch::after {
+  color: #4c97d1;
+  animation: glitch2 4s infinite;
+  text-shadow: none;
+}
+.dark .glitch::before { color: #4c97d1; }
+.dark .glitch::after  { color: #2c7cb6; }
+
+/* ── Cursor blink (used by typewriter in HeroSection) ── */
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── Subtle version for smaller text ── */
+@keyframes glitch-subtle {
+  0%, 92%, 100% { transform: translate(0, 0); opacity: 0; clip-path: inset(0); }
+  93%            { transform: translate(-2px, 0); opacity: 1; clip-path: inset(30% 0 50% 0); }
+  95%            { transform: translate(2px, 0);  opacity: 1; clip-path: inset(60% 0 20% 0); }
+  97%            { transform: translate(-1px, 0); opacity: 1; clip-path: inset(10% 0 70% 0); }
+}
+.glitch-subtle {
+  position: relative;
+  display: inline-block;
+}
+.glitch-subtle::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: #4c97d1;
+  animation: glitch-subtle 5s infinite;
+}
+
+/* ======================================
+   MORPH REVEAL (clip-path)
+   ====================================== */
+.morph-reveal {
+  clip-path: inset(0 100% 0 0);
+  will-change: clip-path;
+}
+.morph-reveal.is-revealed {
+  clip-path: inset(0 0% 0 0);
+  transition: clip-path 0.9s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* ======================================
+   TILT / HOVER SHIFT
+   ====================================== */
+.tilt-element {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.tilt-element:hover {
+  transform: translate(-3px, -3px);
+}
+
+/* ======================================
+   SCROLLBARS
+   ====================================== */
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background-color: #2c7cb6; }
+.dark .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #4c97d1; }
+
+/* ======================================
+   MARQUEE / TICKER
+   ====================================== */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+  will-change: transform;
+}
+.animate-marquee-fast {
+  animation: marquee 18s linear infinite;
+}
+
+/* ======================================
+   PIXEL SHIFT (micro glitch on hover)
+   ====================================== */
+@keyframes pixel-shift {
+  0%   { transform: translate(0, 0);    }
+  20%  { transform: translate(-2px, 1px); }
+  40%  { transform: translate(1px, -2px); }
+  60%  { transform: translate(2px, 1px);  }
+  80%  { transform: translate(-1px, 2px); }
+  100% { transform: translate(0, 0);    }
+}
+.pixel-shift-hover:hover {
+  animation: pixel-shift 0.3s steps(1) 1;
+}
+
+/* ======================================
+   ACCENT LINE (draw-in underline)
+   ====================================== */
+.accent-line {
+  position: relative;
+}
+.accent-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 3px;
+  width: 0;
+  background: linear-gradient(90deg, #2c7cb6, #69b1ee);
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.accent-line:hover::after,
+.accent-line:focus::after {
+  width: 100%;
+}
+
+/* ======================================
+   BENTO GRID
+   ====================================== */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 240px;
+  gap: 1.5rem;
+}
+@media (max-width: 1024px) {
+  .bento-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; }
+}
+@media (max-width: 640px) {
+  .bento-grid { grid-template-columns: 1fr; grid-auto-rows: 250px; }
+}
+.bento-wide { grid-column: span 2; }
+.bento-tall { grid-row: span 2; }
+.bento-big  { grid-column: span 2; grid-row: span 2; }
+
+/* ======================================
+   ADMIN FORM FIXES
+   ====================================== */
+input, textarea, select {
+  @apply text-gray-900 bg-white;
+}
+.dark input, .dark textarea, .dark select {
+  @apply text-white bg-gray-800 border-gray-700;
+}
+
+/* ======================================
+   TEXT REVEAL (stagger baseline)
+   ====================================== */
+.text-reveal-stagger {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* ======================================
+   GLOW FOCUS
+   ====================================== */
+.glow-focus:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(44, 124, 182, 0.35);
+}
+.dark .glow-focus:focus {
+  box-shadow: 0 0 0 3px rgba(76, 151, 209, 0.4);
+}
+
+/* ======================================
+   SECTION ACCENT STRIPE
+   ====================================== */
+.section-stripe {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, #4c97d1 0%, #2c7cb6 50%, #004b74 100%);
+}

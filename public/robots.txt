@@ -1,0 +1,15 @@
+# Rules for all search engines
+User-agent: *
+
+# Block access to admin and sensitive paths
+Disallow: /admin
+Disallow: /api
+Disallow: /login
+
+# Allow access to public assets
+Allow: /uploads/
+Allow: /assets/
+
+# IMPORTANT: Change this to your actual domain after hosting
+Sitemap: https://pixlcraft.studio/sitemap.xml
+
