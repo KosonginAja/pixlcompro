@@ -2,11 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
-import { Menu, X, Globe, ArrowRight } from "lucide-react";
+import { Menu, X, Globe, ArrowRight, Sun, Moon } from "lucide-react";
 
 const Navbar = ({ about, lang }) => {
   const isEn = lang === "en";
-  const { dark } = useTheme();
+  const { dark, toggle } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled]     = useState(false);
   const navRef = useRef(null);
@@ -99,16 +99,9 @@ const Navbar = ({ about, lang }) => {
             ))}
           </div>
 
-          {/* Right controls — order: CTA, then Language */}
+          {/* Right controls — Language + Theme Toggle */}
           <div className="flex items-center gap-2">
-            <a
-              href="#contact"
-              className="hidden sm:flex brut-btn text-[9px] pixel-shift-hover"
-            >
-              {isEn ? "Contact Us" : "Hubungi"}
-              <ArrowRight size={12} strokeWidth={3} />
-            </a>
-
+            {/* Language switcher */}
             <a
               href={isEn ? "/id" : "/"}
               className={`flex items-center gap-1.5 px-3 py-1.5 border-2 text-[11px] font-bold uppercase tracking-wider transition-all pixel-shift-hover ${
@@ -121,7 +114,20 @@ const Navbar = ({ about, lang }) => {
               {isEn ? "EN" : "ID"}
             </a>
 
-            {/* Hamburger */}
+            {/* Theme toggle — desktop only in navbar, mobile in burger area */}
+            <button
+              onClick={toggle}
+              aria-label={dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              className={`w-10 h-10 border-2 flex items-center justify-center transition-all pixel-shift-hover ${
+                scrolled
+                  ? "border-primary-400 text-primary-200 dark:text-primary-700 dark:border-primary-600 hover:bg-primary-500 hover:text-white"
+                  : "border-primary-400 text-primary-600 dark:text-primary-300 hover:bg-primary-500 hover:text-white"
+              }`}
+            >
+              {dark ? <Sun size={15} strokeWidth={2} /> : <Moon size={15} strokeWidth={2} />}
+            </button>
+
+            {/* Hamburger (mobile only) */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
@@ -169,13 +175,14 @@ const Navbar = ({ about, lang }) => {
             </a>
           ))}
 
+          {/* Mobile: CTA Contact Us */}
           <div className="flex gap-4 mt-4">
             <a
               href="#contact"
               onClick={handleLinkClick}
               className="brut-btn pixel-shift-hover"
             >
-              {isEn ? "Get Started" : "Mulai Sekarang"}
+              {isEn ? "Contact Us" : "Hubungi Kami"}
               <ArrowRight size={16} strokeWidth={3} />
             </a>
           </div>
@@ -183,11 +190,20 @@ const Navbar = ({ about, lang }) => {
 
         {/* Corner label */}
         <div className="absolute bottom-8 right-8">
-          <span className="font-pixel text-[8px] text-primary-600 dark:text-primary-400 uppercase tracking-widest">
+          <span className="text-xs font-semibold text-primary-600 dark:text-primary-400 uppercase tracking-widest">
             PixlCraft Studio
           </span>
         </div>
       </div>
+
+      {/* ── Fixed bottom-right: Contact Us CTA ── */}
+      <a
+        href="#contact"
+        className="fixed bottom-6 right-6 z-[100] brut-btn pixel-shift-hover shadow-[4px_4px_0_0_#004b74] dark:shadow-[4px_4px_0_0_#4c97d1]"
+      >
+        {isEn ? "Contact Us" : "Hubungi Kami"}
+        <ArrowRight size={14} strokeWidth={3} />
+      </a>
     </>
   );
 };

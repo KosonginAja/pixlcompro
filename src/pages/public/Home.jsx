@@ -14,7 +14,6 @@ const ClientsSection = lazy(() => import("../../components/sections/ClientsSecti
 const ContactSection = lazy(() => import("../../components/sections/ContactSection"));
 const Footer = lazy(() => import("../../components/sections/Footer"));
 
-import ThemeToggle from "../../components/ThemeToggle";
 
 const Home = ({ lang = "en" }) => {
   const [hero, setHero] = useState(null);
@@ -278,7 +277,6 @@ const Home = ({ lang = "en" }) => {
       <Suspense fallback={null}>
         <Footer about={about} lang={lang} />
       </Suspense>
-      <ThemeToggle />
     </div>
   );
 };
