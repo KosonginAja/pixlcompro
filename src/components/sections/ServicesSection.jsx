@@ -365,6 +365,7 @@ const ServicesSection = ({ services, about, lang }) => {
             <div 
               className="service-grid flex flex-col gap-4 pt-2 pb-6 overflow-y-auto custom-scrollbar-left flex-1 pr-6" 
               style={{ direction: 'rtl', paddingLeft: '8px' }}
+              data-lenis-prevent
             >
               {services.map((service, index) => {
                 const isActive = activeService?._id === service._id;
