@@ -352,17 +352,21 @@ const ServicesSection = ({ services, about, lang }) => {
         </div>
 
         {/* ── Main Grid ── */}
-        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 items-stretch">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 items-stretch relative">
           {/* ── Sidebar: Categories ── */}
-          <div className="lg:col-span-4 flex flex-col min-h-0">
-            <div className="border-t-4 border-primary-500 pb-1 shrink-0">
-              <span className="text-xs font-bold text-primary-400 dark:text-primary-600 uppercase tracking-widest block py-4">
-                {isEn ? "CATEGORIES" : "KATEGORI"}
-              </span>
-            </div>
+          <div className="lg:col-span-4 relative h-[500px] lg:h-auto">
+            <div className="absolute inset-0 flex flex-col min-h-0">
+              <div className="border-t-4 border-primary-500 pb-1 shrink-0">
+                <span className="text-xs font-bold text-primary-400 dark:text-primary-600 uppercase tracking-widest block py-4">
+                  {isEn ? "CATEGORIES" : "KATEGORI"}
+                </span>
+              </div>
 
-            {/* Categories list */}
-            <div className="service-grid flex flex-col gap-4 pt-2 pb-4 overflow-y-auto custom-scrollbar-left flex-1 min-h-0" style={{ direction: 'rtl', paddingLeft: '12px' }}>
+              {/* Categories list */}
+              <div 
+                className="service-grid flex flex-col gap-4 pt-2 pb-6 overflow-y-auto custom-scrollbar-left flex-1 min-h-0 pr-3" 
+                style={{ direction: 'rtl', paddingLeft: '8px' }}
+              >
               {services.map((service, index) => {
                 const isActive = activeService?._id === service._id;
                 const style = catStyles[index % catStyles.length];
@@ -406,6 +410,7 @@ const ServicesSection = ({ services, about, lang }) => {
                   </div>
                 );
               })}
+            </div>
             </div>
 
           </div>
