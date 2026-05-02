@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
 import { ThemeProvider } from './context/ThemeContext';
@@ -13,6 +13,10 @@ import Lenis from "lenis";
 
 // Public Pages
 import Home from './pages/public/Home';
+import ServicesPage from './pages/public/ServicesPage';
+import PortfolioPage from './pages/public/PortfolioPage';
+import AboutPage from './pages/public/AboutPage';
+import ContactPage from './pages/public/ContactPage';
 
 // Admin Pages
 import Login from './admin/pages/admin/Login';
@@ -42,9 +46,21 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
+// ScrollToTop component + refresh ScrollTrigger on route change
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    // Allow DOM to settle, then refresh all ScrollTriggers
+    const timer = setTimeout(() => ScrollTrigger.refresh(true), 200);
+    return () => clearTimeout(timer);
+  }, [pathname]);
+  return null;
+};
+
+
 function App() {
   useEffect(() => {
-    // 1. Initialize Lenis (Smooth Scroll) - Only for public pages
     const isAdmin = window.location.pathname.startsWith(`/${ADMIN_PATH}`);
     let lenis = null;
 
@@ -55,7 +71,6 @@ function App() {
         smoothWheel: true,
       });
 
-      // 2. Synchronize Lenis with ScrollTrigger
       lenis.on('scroll', ScrollTrigger.update);
 
       const raf = (time) => {
@@ -67,7 +82,7 @@ function App() {
       gsap.ticker.lagSmoothing(0);
     }
 
-    // 3. Record visitor hit
+    // Record visitor hit
     const recordHit = async () => {
       try {
         const date = new Date().toISOString().split('T')[0];
@@ -91,11 +106,22 @@ function App() {
       <AuthProvider>
         <HelmetProvider>
           <Router>
+            <ScrollToTop />
             <Toaster position="top-right" />
             <Routes>
-              {/* Public Routes */}
+              {/* Public Routes — EN */}
               <Route path="/" element={<Home lang="en" />} />
+              <Route path="/services" element={<ServicesPage lang="en" />} />
+              <Route path="/portfolio" element={<PortfolioPage lang="en" />} />
+              <Route path="/about" element={<AboutPage lang="en" />} />
+              <Route path="/contact" element={<ContactPage lang="en" />} />
+
+              {/* Public Routes — ID */}
               <Route path="/id" element={<Home lang="id" />} />
+              <Route path="/id/services" element={<ServicesPage lang="id" />} />
+              <Route path="/id/portfolio" element={<PortfolioPage lang="id" />} />
+              <Route path="/id/about" element={<AboutPage lang="id" />} />
+              <Route path="/id/contact" element={<ContactPage lang="id" />} />
 
               {/* Admin Routes (Secret Path) */}
               <Route path={`/${ADMIN_PATH}/login`} element={<Login />} />
