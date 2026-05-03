@@ -2,24 +2,18 @@ import { useRef, useLayoutEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const SectionWrapper = ({
-  children,
-  id,
-  className = "",
-  bg = "bg-white dark:bg-primary-950",
-  noPadding = false,
-}) => {
+const SectionWrapper = ({ children, id, className = "", bg = "", noPadding = false }) => {
   const ref = useRef(null);
 
   useLayoutEffect(() => {
     if (!ref.current) return;
     const ctx = gsap.context(() => {
-      const targets = ref.current.querySelectorAll(".gsap-fade");
-      if (!targets.length) return;
-      gsap.set(targets, { opacity: 0, y: 40 });
-      targets.forEach((el, i) => {
+      const els = ref.current.querySelectorAll(".gsap-fade");
+      if (!els.length) return;
+      gsap.set(els, { opacity: 0, y: 30 });
+      els.forEach((el, i) => {
         gsap.to(el, {
-          opacity: 1, y: 0, duration: 0.7, delay: i * 0.1, ease: "power2.out",
+          opacity: 1, y: 0, duration: 0.6, delay: i * 0.08, ease: "power2.out",
           scrollTrigger: { trigger: el, start: "top 85%", once: true },
         });
       });
@@ -29,8 +23,8 @@ const SectionWrapper = ({
   }, []);
 
   return (
-    <section ref={ref} id={id} className={`${bg} relative overflow-hidden transition-colors ${noPadding ? "" : "py-20 lg:py-32"} ${className}`}>
-      <div className="relative z-10">{children}</div>
+    <section ref={ref} id={id} className={`${bg} relative transition-colors ${noPadding ? "" : "py-24 lg:py-32"} ${className}`}>
+      {children}
     </section>
   );
 };
