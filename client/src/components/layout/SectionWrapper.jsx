@@ -2,7 +2,9 @@ import { useRef, useLayoutEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const SectionWrapper = ({ children, id, className = "", bg = "", noPadding = false }) => {
+gsap.registerPlugin(ScrollTrigger);
+
+const SectionWrapper = ({ children, id, className = "", surface = "surface-base", noPadding = false }) => {
   const ref = useRef(null);
 
   useLayoutEffect(() => {
@@ -10,20 +12,20 @@ const SectionWrapper = ({ children, id, className = "", bg = "", noPadding = fal
     const ctx = gsap.context(() => {
       const els = ref.current.querySelectorAll(".gsap-fade");
       if (!els.length) return;
-      gsap.set(els, { opacity: 0, y: 30 });
-      els.forEach((el, i) => {
+      gsap.set(els, { opacity: 0, y: 24 });
+      els.forEach((el) => {
         gsap.to(el, {
-          opacity: 1, y: 0, duration: 0.6, delay: i * 0.08, ease: "power2.out",
-          scrollTrigger: { trigger: el, start: "top 85%", once: true },
+          opacity: 1, y: 0, duration: 0.7, ease: "power3.out",
+          scrollTrigger: { trigger: el, start: "top 88%", once: true },
         });
       });
     }, ref);
-    const t = setTimeout(() => ScrollTrigger.refresh(), 100);
+    const t = setTimeout(() => ScrollTrigger.refresh(), 120);
     return () => { clearTimeout(t); ctx.revert(); };
   }, []);
 
   return (
-    <section ref={ref} id={id} className={`${bg} relative transition-colors ${noPadding ? "" : "py-24 lg:py-32"} ${className}`}>
+    <section ref={ref} id={id} className={`${surface} relative ${noPadding ? "" : "py-[55px] lg:py-[89px]"} ${className}`}>
       {children}
     </section>
   );

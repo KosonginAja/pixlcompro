@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* ── Blue palette ── */
+  /* ── PixlCraft Blue palette ── */
   --color-primary-50:  #e7f2ff;
   --color-primary-100: #cde5ff;
   --color-primary-200: #94ccff;
@@ -12,13 +12,13 @@
   --color-primary-700: #004b74;
   --color-primary-800: #003352;
   --color-primary-900: #001d32;
-  --color-primary-950: #000000;
+  --color-primary-950: #000a12;
 }
 
 @custom-variant dark (&:is(.dark *));
 
 /* ======================================
-   BASE — Clean Premium
+   BASE — Structured Premium
    ====================================== */
 html {
   scroll-behavior: smooth;
@@ -28,8 +28,9 @@ html {
 html, body {
   font-family: "Manrope", system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 15px;
   background-color: #ffffff;
-  color: #001d32;
+  color: #111111;
   overflow-x: hidden;
   max-width: 100vw;
 }
@@ -39,7 +40,7 @@ html, body {
   color: #cde5ff;
 }
 
-/* ── Smooth global dark/light transition ── */
+/* ── Smooth theme transitions ── */
 *, *::before, *::after {
   transition:
     background-color 0.3s ease,
@@ -51,7 +52,7 @@ html, body {
 }
 
 /* ======================================
-   FONT UTILITIES
+   FONT — Pixel accent
    ====================================== */
 .font-pixel {
   font-family: "Press Start 2P", cursive;
@@ -59,37 +60,21 @@ html, body {
 }
 
 /* ======================================
-   CLEAN DESIGN SYSTEM
+   SECTION SURFACES
+   Light mode uses layered blue-tints.
+   Dark mode uses depth-layered navies.
    ====================================== */
+.surface-base   { background: #ffffff; }
+.surface-raised { background: #f5f9ff; }
+.surface-accent { background: #e7f2ff; }
+.surface-deep   { background: linear-gradient(135deg, #001d32 0%, #003352 60%, #004b74 100%); color: #cde5ff; }
+.surface-hero   { background: linear-gradient(160deg, #001d32 0%, #003352 40%, #004b74 100%); color: #ffffff; }
 
-/* ── Eyebrow label (small decorative tag) ── */
-.eyebrow {
-  font-family: "Manrope", sans-serif;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #4c97d1;
-  display: inline-block;
-}
-
-/* ── Divider line ── */
-.section-divider {
-  height: 1px;
-  background: linear-gradient(90deg, #4c97d1, transparent);
-  width: 48px;
-}
-.dark .section-divider {
-  background: linear-gradient(90deg, #4c97d1, transparent);
-}
-
-/* ======================================
-   CURSOR BLINK (typewriter)
-   ====================================== */
-@keyframes blink-cursor {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
-}
+.dark .surface-base   { background: #001d32; }
+.dark .surface-raised { background: #00243d; }
+.dark .surface-accent { background: #002d4a; }
+.dark .surface-deep   { background: linear-gradient(135deg, #000a12 0%, #001d32 100%); }
+.dark .surface-hero   { background: linear-gradient(160deg, #000a12 0%, #001d32 40%, #003352 100%); }
 
 /* ======================================
    SCROLLBARS
@@ -103,42 +88,19 @@ html, body {
 .dark .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #4c97d1; }
 
 /* ======================================
-   MARQUEE / TICKER
+   CURSOR BLINK (typewriter)
+   ====================================== */
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ======================================
+   MARQUEE
    ====================================== */
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
-}
-
-/* ======================================
-   ACCENT UNDERLINE (draw-in)
-   ====================================== */
-.accent-line {
-  position: relative;
-}
-.accent-line::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  height: 2px;
-  width: 0;
-  background: #4c97d1;
-  transition: width 0.3s ease;
-}
-.accent-line:hover::after {
-  width: 100%;
-}
-
-/* ======================================
-   FOCUS RING
-   ====================================== */
-.focus-ring:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(76, 151, 209, 0.4);
-}
-.dark .focus-ring:focus {
-  box-shadow: 0 0 0 2px rgba(76, 151, 209, 0.5);
 }
 
 /* ======================================
@@ -149,21 +111,4 @@ input, textarea, select {
 }
 .dark input, .dark textarea, .dark select {
   @apply text-white bg-gray-800 border-gray-700;
-}
-
-/* ======================================
-   CUSTOM SCROLLBAR LEFT
-   ====================================== */
-.custom-scrollbar-left::-webkit-scrollbar {
-  width: 4px;
-}
-.custom-scrollbar-left::-webkit-scrollbar-track {
-  background: transparent;
-}
-.custom-scrollbar-left::-webkit-scrollbar-thumb {
-  background-color: #2c7cb6;
-  border-radius: 2px;
-}
-.dark .custom-scrollbar-left::-webkit-scrollbar-thumb {
-  background-color: #4c97d1;
 }

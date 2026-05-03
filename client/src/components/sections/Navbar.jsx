@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { Link, useLocation } from "react-router-dom";
-
 import { gsap } from "gsap";
 import { Menu, X, Globe, Sun, Moon, ArrowRight } from "lucide-react";
 
@@ -27,7 +26,7 @@ const Navbar = ({ about, lang }) => {
 
   useEffect(() => {
     if (!ref.current) return;
-    gsap.from(ref.current, { y: -60, opacity: 0, duration: 0.6, ease: "power2.out", delay: 0.05 });
+    gsap.fromTo(ref.current, { y: -40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power2.out", delay: 0.1 });
   }, []);
 
   const close = () => setOpen(false);
@@ -48,65 +47,66 @@ const Navbar = ({ about, lang }) => {
 
   return (
     <>
-      <nav ref={ref} className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/90 dark:bg-primary-900/90 backdrop-blur-lg border-b border-primary-100 dark:border-primary-800" : "bg-transparent"}`}>
-        <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between h-16">
+      <nav ref={ref} className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/95 dark:bg-primary-900/95 backdrop-blur-md shadow-[0_1px_0_0_rgba(0,29,50,0.08)]" : "bg-white/80 dark:bg-primary-900/80 backdrop-blur-sm"}`}>
+        <div className="max-w-7xl mx-auto px-5 md:px-8 flex items-center justify-between h-[55px]">
           {/* Logo */}
-          <Link to={`${lp}/`} className="flex items-center gap-2.5 shrink-0">
+          <Link to={`${lp}/`} className="flex items-center gap-2 shrink-0 group">
             {about?.logo ? (
-              <img src={about.logo} alt="Logo" className="w-7 h-7 object-cover" />
+              <img src={about.logo} alt="PixlCraft" className="w-6 h-6 object-contain" />
             ) : (
-              <div className="w-7 h-7 bg-primary-400 rounded-sm flex items-center justify-center">
-                <span className="text-white font-bold text-xs">P</span>
+              <div className="w-6 h-6 bg-primary-400 flex items-center justify-center">
+                <span className="text-white font-extrabold text-[10px]">P</span>
               </div>
             )}
-            <div className="leading-none">
-              <span className="font-extrabold text-sm text-primary-900 dark:text-white tracking-tight">PixlCraft</span>
-              <span className="text-[9px] font-semibold tracking-[0.15em] uppercase text-primary-400 block">Studio</span>
-            </div>
+            <span className="font-extrabold text-[13px] text-primary-900 dark:text-white tracking-tight leading-none">PixlCraft<span className="text-primary-400">.</span></span>
           </Link>
 
           {/* Desktop links */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-7">
             {links.map((l) => (
-              <Link key={l.to} to={l.to} className={`text-[13px] font-semibold transition-colors relative pb-0.5 ${isActive(l.to) ? "text-primary-400" : "text-primary-700 dark:text-primary-200 hover:text-primary-400"}`}>
+              <Link key={l.to} to={l.to} className={`text-[13px] font-medium transition-colors ${isActive(l.to) ? "text-primary-400 font-semibold" : "text-[#666] dark:text-primary-300 hover:text-primary-900 dark:hover:text-white"}`}>
                 {isEn ? l.en : l.id}
-                {isActive(l.to) && <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-primary-400 rounded-full" />}
               </Link>
             ))}
           </div>
 
-          {/* Right */}
-          <div className="flex items-center gap-2">
-            <Link to={isEn ? "/id/" : "/"} className="flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-semibold text-primary-500 hover:text-primary-400 transition-colors">
+          {/* Right controls */}
+          <div className="flex items-center gap-1.5">
+            <Link to={isEn ? "/id/" : "/"} className="flex items-center gap-1 px-2 py-1.5 text-[11px] font-semibold text-[#999] hover:text-primary-400 transition-colors">
               <Globe size={12} />
               {isEn ? "EN" : "ID"}
             </Link>
-            <button onClick={toggle} aria-label="Theme" className="w-8 h-8 flex items-center justify-center text-primary-500 hover:text-primary-400 transition-colors rounded-md hover:bg-primary-50 dark:hover:bg-primary-800">
-              {dark ? <Sun size={15} /> : <Moon size={15} />}
+            <button onClick={toggle} aria-label="Theme" className="w-8 h-8 flex items-center justify-center text-[#999] hover:text-primary-400 transition-colors">
+              {dark ? <Sun size={14} /> : <Moon size={14} />}
             </button>
-            <button onClick={() => setOpen(!open)} aria-label="Menu" className="lg:hidden w-8 h-8 flex items-center justify-center text-primary-700 dark:text-primary-200">
+            <Link to={`${lp}/contact`} className="hidden lg:inline-flex items-center gap-1.5 px-4 py-2 bg-primary-400 text-white text-[12px] font-bold tracking-wide hover:bg-primary-500 transition-colors">
+              {isEn ? "Start Project" : "Mulai"} <ArrowRight size={12} />
+            </Link>
+            <button onClick={() => setOpen(!open)} aria-label="Menu" className="lg:hidden w-8 h-8 flex items-center justify-center text-primary-900 dark:text-white">
               {open ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Mobile menu */}
-      <div className={`fixed inset-0 z-40 bg-white dark:bg-primary-900 flex flex-col justify-center lg:hidden transition-all duration-300 ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
-        <div className="px-8 flex flex-col gap-5">
-          {links.map((l, i) => (
-            <Link key={i} to={l.to} onClick={close} className={`font-extrabold text-2xl text-primary-900 dark:text-white tracking-tight pb-4 border-b border-primary-100 dark:border-primary-800 flex items-center justify-between transition-all duration-200 ${open ? "translate-x-0 opacity-100" : "translate-x-6 opacity-0"}`} style={{ transitionDelay: `${i * 40}ms` }}>
-              {isEn ? l.en : l.id}
-              <ArrowRight size={16} className="text-primary-300" />
-            </Link>
-          ))}
-          <div className="mt-6">
-            <Link to={`${lp}/contact`} onClick={close} className="inline-flex items-center gap-2 px-6 py-3 bg-primary-400 text-white font-bold text-sm rounded-md hover:bg-primary-500 transition-colors">
-              {isEn ? "Start a Project" : "Mulai Proyek"} <ArrowRight size={14} />
-            </Link>
+      {/* Mobile overlay */}
+      {open && (
+        <div className="fixed inset-0 z-40 bg-white dark:bg-primary-900 flex flex-col justify-center lg:hidden">
+          <div className="px-8 flex flex-col gap-0">
+            {links.map((l, i) => (
+              <Link key={i} to={l.to} onClick={close} className="font-bold text-xl text-primary-900 dark:text-white py-4 border-b border-primary-100 dark:border-primary-800 flex items-center justify-between">
+                {isEn ? l.en : l.id}
+                <ArrowRight size={14} className="text-primary-300" />
+              </Link>
+            ))}
+            <div className="mt-8">
+              <Link to={`${lp}/contact`} onClick={close} className="inline-flex items-center gap-2 px-5 py-3 bg-primary-400 text-white font-bold text-sm">
+                {isEn ? "Start Project" : "Mulai Proyek"} <ArrowRight size={13} />
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

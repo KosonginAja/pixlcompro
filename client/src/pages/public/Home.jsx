@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
@@ -64,12 +64,12 @@ const Home = ({ lang = "en" }) => {
   useEffect(() => {
     if (loading || !heroRef.current) return;
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-      tl.from(".hero-badge", { y: -15, opacity: 0, duration: 0.4, delay: 0.1 })
-        .from(".hero-h1", { y: 30, opacity: 0, duration: 0.6 }, "-=0.2")
-        .from(".hero-sub", { y: 20, opacity: 0, duration: 0.5 }, "-=0.3")
-        .from(".hero-cta", { y: 15, opacity: 0, stagger: 0.08, duration: 0.4 }, "-=0.2")
-        .from(".hero-stat", { x: 30, opacity: 0, stagger: 0.1, duration: 0.5 }, "-=0.3");
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      tl.fromTo(".hero-eyebrow", { y: -10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, delay: 0.2 })
+        .fromTo(".hero-h1", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, "-=0.15")
+        .fromTo(".hero-sub", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, "-=0.25")
+        .fromTo(".hero-cta", { y: 12, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.06, duration: 0.4 }, "-=0.2")
+        .fromTo(".hero-stat", { y: 20, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.08, duration: 0.5 }, "-=0.3");
     }, heroRef);
     return () => ctx.revert();
   }, [loading]);
@@ -88,72 +88,71 @@ const Home = ({ lang = "en" }) => {
 
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center bg-white dark:bg-primary-900">
-      <div className="w-8 h-8 border-2 border-primary-200 dark:border-primary-700 border-b-primary-400 rounded-full animate-spin" />
+      <div className="w-6 h-6 border-2 border-primary-200 dark:border-primary-700 border-t-primary-400 rounded-full animate-spin" />
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-white dark:bg-primary-900 font-sans selection:bg-primary-400/30 selection:text-primary-900 dark:selection:text-white transition-colors">
-      <Helmet><title>{isEn ? "PixlCraft Studio — Creative Digital Agency" : "PixlCraft Studio — Agensi Kreatif Digital"}</title></Helmet>
+    <div className="min-h-screen bg-white dark:bg-primary-900 font-sans transition-colors">
+      <Helmet><title>{isEn ? "PixlCraft Studio — Where Ideas Take Shape" : "PixlCraft Studio — Where Ideas Take Shape"}</title></Helmet>
       <Navbar about={about} lang={lang} />
 
       <main>
-        {/* ═══ 1. HERO — gradient bg, 60/40 ═══ */}
-        <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden pt-16" style={{ background: "linear-gradient(135deg, #001d32 0%, #003352 50%, #004b74 100%)" }}>
-          <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 w-full py-20 grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-center">
-            {/* LEFT 3/5 = 60% */}
-            <div className="lg:col-span-3">
-              {hero?.badgeTextEn && (
-                <div className="hero-badge mb-5">
-                  <span className="eyebrow text-primary-300">{isEn ? hero.badgeTextEn : hero.badgeTextId}</span>
+        {/* ═══ 1. HERO ═══ */}
+        <section ref={heroRef} className="surface-hero relative min-h-[90vh] flex items-center pt-[55px]">
+          <div className="max-w-7xl mx-auto px-5 md:px-8 w-full py-[55px] lg:py-[89px]">
+            {/* 62/38 split */}
+            <div className="grid grid-cols-1 lg:grid-cols-[62fr_38fr] gap-[34px] lg:gap-[55px] items-end">
+              {/* Left — copy */}
+              <div>
+                {hero?.badgeTextEn && (
+                  <span className="hero-eyebrow font-pixel text-[8px] text-primary-300 tracking-[0.2em] uppercase mb-5 block">{isEn ? hero.badgeTextEn : hero.badgeTextId}</span>
+                )}
+                <h1 className="hero-h1 font-extrabold text-white tracking-tight leading-[1.08] mb-5" style={{ fontSize: "clamp(1.8rem, 4.5vw, 3.2rem)" }}>
+                  {firstPart}
+                  <span className="text-primary-300 block mt-1 font-pixel" style={{ fontSize: "clamp(0.55rem, 1.5vw, 0.75rem)", lineHeight: 2, letterSpacing: "0.05em" }}>
+                    {typed}<span className="ml-0.5" style={{ animation: "blink-cursor 1s step-end infinite" }}>_</span>
+                  </span>
+                </h1>
+                <p className="hero-sub text-primary-200 text-[15px] leading-relaxed mb-8 max-w-md">{isEn ? hero?.subheadlineEn : hero?.subheadlineId}</p>
+                <div className="flex flex-wrap gap-3">
+                  <Link to={`${lp}/contact`} className="hero-cta inline-flex items-center gap-2 px-5 py-2.5 bg-primary-400 text-white font-bold text-[13px] hover:bg-primary-500 transition-colors">
+                    {isEn ? hero?.ctaTextEn : hero?.ctaTextId} <ArrowRight size={13} />
+                  </Link>
+                  <Link to={`${lp}/portfolio`} className="hero-cta inline-flex items-center gap-2 px-5 py-2.5 border border-primary-400/40 text-primary-200 font-medium text-[13px] hover:border-primary-300 hover:text-white transition-colors">
+                    {isEn ? "See Our Work" : "Lihat Karya"} <ArrowRight size={13} />
+                  </Link>
                 </div>
-              )}
-              <h1 className="hero-h1 font-extrabold text-white leading-[1.1] tracking-tight mb-6" style={{ fontSize: "clamp(2.2rem, 5vw, 4rem)" }}>
-                {firstPart}
-                <span className="font-pixel text-primary-300 block mt-2" style={{ fontSize: "clamp(0.6rem, 1.8vw, 0.85rem)", lineHeight: 2 }}>
-                  {typed}<span className="ml-0.5" style={{ animation: "blink-cursor 1s step-end infinite" }}>_</span>
-                </span>
-              </h1>
-              <p className="hero-sub text-primary-200 text-base lg:text-lg leading-relaxed mb-8 max-w-md">
-                {isEn ? hero?.subheadlineEn : hero?.subheadlineId}
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <Link to={`${lp}/contact`} className="hero-cta inline-flex items-center gap-2 px-6 py-3 bg-primary-400 text-white font-bold text-sm rounded-md hover:bg-primary-300 transition-colors">
-                  {isEn ? hero?.ctaTextEn : hero?.ctaTextId} <ArrowRight size={15} />
-                </Link>
-                <Link to={`${lp}/services`} className="hero-cta inline-flex items-center gap-2 px-6 py-3 border border-primary-400 text-primary-200 font-semibold text-sm rounded-md hover:bg-white/5 transition-colors">
-                  {isEn ? "Our Services" : "Layanan Kami"}
-                </Link>
               </div>
-            </div>
 
-            {/* RIGHT 2/5 = 40% */}
-            <div className="lg:col-span-2 hidden lg:flex flex-col gap-4">
-              {stats.map((s, i) => (
-                <div key={i} className="hero-stat p-5 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/8 transition-colors">
-                  <div className="text-3xl font-extrabold text-white leading-none mb-1"><AnimatedCounter value={s.val} /></div>
-                  <div className="text-xs font-medium text-primary-300 tracking-wide">{isEn ? s.en : s.id}</div>
+              {/* Right — stats */}
+              <div className="hidden lg:block">
+                <div className="border-t border-white/10 pt-5">
+                  <div className="grid grid-cols-3 gap-0">
+                    {stats.map((s, i) => (
+                      <div key={i} className={`hero-stat text-center py-3 ${i < 2 ? "border-r border-white/10" : ""}`}>
+                        <div className="text-2xl font-extrabold text-white leading-none mb-1"><AnimatedCounter value={s.val} /></div>
+                        <div className="text-[10px] font-medium text-primary-400 tracking-wide uppercase">{isEn ? s.en : s.id}</div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </section>
 
-        {/* ═══ 2. CREDIBILITY / TRUST ═══ */}
+        {/* ═══ 2. TRUST MARQUEE ═══ */}
         {testimonials.length > 0 && (
-          <section className="bg-primary-50 dark:bg-primary-800/20 border-b border-primary-100 dark:border-primary-800 transition-colors">
-            <div className="py-5 overflow-hidden relative">
-              <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-primary-50 dark:from-primary-900 to-transparent z-10 pointer-events-none" />
-              <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-primary-50 dark:from-primary-900 to-transparent z-10 pointer-events-none" />
-              <div className="flex items-center" style={{ animation: "marquee 35s linear infinite", width: "max-content" }}>
+          <section className="surface-accent border-y border-primary-100 dark:border-primary-800">
+            <div className="py-4 overflow-hidden relative">
+              <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-primary-50 dark:from-primary-800/20 to-transparent z-10 pointer-events-none" />
+              <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-primary-50 dark:from-primary-800/20 to-transparent z-10 pointer-events-none" />
+              <div className="flex items-center" style={{ animation: "marquee 30s linear infinite", width: "max-content" }}>
                 {[...testimonials, ...testimonials].filter(c => c.name).map((c, i) => (
-                  <div key={i} className="inline-flex items-center gap-3 mx-10 shrink-0 group">
-                    {c.avatar ? (
-                      <img src={c.avatar} alt={c.name} className="w-10 h-8 object-contain grayscale opacity-30 group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-300" />
-                    ) : (
-                      <div className="w-8 h-8 bg-primary-100 dark:bg-primary-800 rounded-md flex items-center justify-center"><span className="font-bold text-primary-400 text-xs">{c.name?.charAt(0)}</span></div>
-                    )}
-                    <span className="font-bold text-lg text-primary-300 dark:text-primary-600 tracking-tight whitespace-nowrap">{c.name}</span>
+                  <div key={i} className="inline-flex items-center gap-2.5 mx-8 shrink-0">
+                    {c.avatar ? <img src={c.avatar} alt={c.name} className="w-8 h-6 object-contain grayscale opacity-40" /> : null}
+                    <span className="font-semibold text-sm text-primary-400/60 dark:text-primary-500 whitespace-nowrap">{c.name}</span>
                   </div>
                 ))}
               </div>
@@ -162,68 +161,83 @@ const Home = ({ lang = "en" }) => {
         )}
 
         {/* ═══ 3. SERVICES PREVIEW ═══ */}
-        <SectionWrapper bg="bg-white dark:bg-primary-900">
-          <SectionHeader label={isEn ? "Services" : "Layanan"} title={isEn ? "What We Do Best" : "Keahlian Kami"} description={isEn ? "End-to-end digital solutions engineered for measurable business growth." : "Solusi digital end-to-end untuk pertumbuhan bisnis terukur."} />
+        <SectionWrapper surface="surface-base">
+          <SectionHeader eyebrow={isEn ? "Services" : "Layanan"} title={isEn ? "What We Build" : "Apa Yang Kami Bangun"} description={isEn ? "End-to-end digital solutions crafted with precision and purpose." : "Solusi digital end-to-end yang dibuat dengan presisi dan tujuan."} />
           <SectionContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            <div className="space-y-0 border-t border-primary-100 dark:border-primary-800">
               {services.slice(0, 4).map((s, i) => (
-                <div key={s._id} className="gsap-fade group p-7 rounded-lg border border-primary-100 dark:border-primary-800 bg-primary-50/50 dark:bg-primary-800/20 hover:border-primary-300 dark:hover:border-primary-600 hover:shadow-sm transition-all duration-300">
-                  <div className="flex items-start gap-4 mb-3">
-                    <span className="font-pixel text-[9px] text-primary-300 dark:text-primary-600 leading-none shrink-0 mt-1">{(i + 1).toString().padStart(2, "0")}</span>
-                    <h3 className="font-bold text-lg text-primary-900 dark:text-white leading-snug">{isEn ? s.titleEn : s.titleId}</h3>
-                  </div>
-                  <p className="text-primary-600 dark:text-primary-400 text-sm leading-relaxed ml-9 line-clamp-2">{isEn ? s.descriptionEn : s.descriptionId}</p>
+                <div key={s._id} className="gsap-fade grid grid-cols-1 md:grid-cols-[55px_1fr_38fr] gap-4 md:gap-8 items-baseline py-6 border-b border-primary-100 dark:border-primary-800 group hover:bg-primary-50/50 dark:hover:bg-primary-800/10 transition-colors px-2">
+                  <span className="font-pixel text-[8px] text-primary-300 dark:text-primary-600 tracking-[0.15em]">{(i + 1).toString().padStart(2, "0")}</span>
+                  <h3 className="font-bold text-[18px] text-primary-900 dark:text-white leading-snug">{isEn ? s.titleEn : s.titleId}</h3>
+                  <p className="text-[#666] dark:text-primary-400 text-[14px] leading-relaxed line-clamp-2">{isEn ? s.descriptionEn : s.descriptionId}</p>
                 </div>
               ))}
             </div>
-            <div className="mt-10 gsap-fade">
-              <Link to={`${lp}/services`} className="inline-flex items-center gap-2 text-primary-400 font-semibold text-sm hover:gap-3 transition-all accent-line">
-                {isEn ? "View All Services" : "Lihat Semua Layanan"} <ArrowRight size={14} />
+            <div className="mt-8 gsap-fade">
+              <Link to={`${lp}/services`} className="inline-flex items-center gap-2 text-primary-400 font-semibold text-[13px] hover:gap-3 transition-all">
+                {isEn ? "View All Services" : "Lihat Semua Layanan"} <ArrowRight size={13} />
               </Link>
             </div>
           </SectionContent>
         </SectionWrapper>
 
-        {/* ═══ 4. FEATURED PORTFOLIO ═══ */}
-        <SectionWrapper bg="bg-primary-50 dark:bg-primary-800/10">
-          <SectionHeader label={isEn ? "Portfolio" : "Portofolio"} title={isEn ? "Selected Work" : "Karya Terpilih"} />
+        {/* ═══ 4. PORTFOLIO ═══ */}
+        <SectionWrapper surface="surface-raised">
+          <SectionHeader eyebrow={isEn ? "Work" : "Karya"} title={isEn ? "Selected Projects" : "Proyek Terpilih"} />
           <SectionContent>
             {portfolio.length > 0 && (
-              <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8">
-                <div className="lg:col-span-3 gsap-fade"><PCard p={portfolio[0]} isEn={isEn} large /></div>
-                <div className="lg:col-span-2 flex flex-col gap-6 lg:gap-8">
-                  {portfolio.slice(1, 3).map(p => <div key={p._id} className="gsap-fade"><PCard p={p} isEn={isEn} /></div>)}
+              <div className="grid grid-cols-1 lg:grid-cols-[62fr_38fr] gap-5">
+                {/* Feature — large */}
+                <div className="gsap-fade group cursor-pointer" onClick={() => portfolio[0]?.url && window.open(portfolio[0].url.startsWith("http") ? portfolio[0].url : `https://${portfolio[0].url}`, "_blank")}>
+                  <div className="relative overflow-hidden aspect-[16/10] mb-3">
+                    {portfolio[0].image ? <img src={portfolio[0].image} alt="" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" loading="lazy" />
+                      : <div className="w-full h-full bg-primary-100 dark:bg-primary-800 flex items-center justify-center"><Box size={24} className="text-primary-200" /></div>}
+                    <div className="absolute top-3 right-3 w-7 h-7 bg-white/90 dark:bg-primary-900/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"><ArrowUpRight size={13} className="text-primary-900 dark:text-white" /></div>
+                  </div>
+                  <span className="font-pixel text-[7px] text-primary-400 tracking-[0.2em] uppercase">{isEn ? portfolio[0].categoryEn : portfolio[0].categoryId}</span>
+                  <h3 className="font-bold text-primary-900 dark:text-white text-[15px] mt-0.5">{isEn ? portfolio[0].titleEn : portfolio[0].titleId}</h3>
+                </div>
+
+                {/* Smaller items */}
+                <div className="flex flex-col gap-5">
+                  {portfolio.slice(1, 3).map(p => (
+                    <div key={p._id} className="gsap-fade group cursor-pointer" onClick={() => p.url && window.open(p.url.startsWith("http") ? p.url : `https://${p.url}`, "_blank")}>
+                      <div className="relative overflow-hidden aspect-[16/10] mb-2.5">
+                        {p.image ? <img src={p.image} alt="" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" loading="lazy" />
+                          : <div className="w-full h-full bg-primary-100 dark:bg-primary-800 flex items-center justify-center"><Box size={20} className="text-primary-200" /></div>}
+                        <div className="absolute top-2.5 right-2.5 w-6 h-6 bg-white/90 dark:bg-primary-900/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"><ArrowUpRight size={11} className="text-primary-900 dark:text-white" /></div>
+                      </div>
+                      <span className="font-pixel text-[7px] text-primary-400 tracking-[0.2em] uppercase">{isEn ? p.categoryEn : p.categoryId}</span>
+                      <h3 className="font-bold text-primary-900 dark:text-white text-[14px] mt-0.5">{isEn ? p.titleEn : p.titleId}</h3>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
-            <div className="mt-10 gsap-fade">
-              <Link to={`${lp}/portfolio`} className="inline-flex items-center gap-2 text-primary-400 font-semibold text-sm hover:gap-3 transition-all accent-line">
-                {isEn ? "View All Projects" : "Lihat Semua Proyek"} <ArrowRight size={14} />
+            <div className="mt-8 gsap-fade">
+              <Link to={`${lp}/portfolio`} className="inline-flex items-center gap-2 text-primary-400 font-semibold text-[13px] hover:gap-3 transition-all">
+                {isEn ? "View All Projects" : "Lihat Semua Proyek"} <ArrowRight size={13} />
               </Link>
             </div>
           </SectionContent>
         </SectionWrapper>
 
-        {/* ═══ 5. ABOUT PREVIEW — 60/40 ═══ */}
+        {/* ═══ 5. ABOUT PREVIEW — 62/38 ═══ */}
         {about && (
-          <SectionWrapper bg="bg-white dark:bg-primary-900">
+          <SectionWrapper surface="surface-base">
             <SectionContent>
-              <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-center">
-                <div className="lg:col-span-3 gsap-fade">
-                  <span className="eyebrow mb-4 block">{isEn ? "About Us" : "Tentang Kami"}</span>
-                  <h2 className="text-3xl lg:text-4xl font-extrabold text-primary-900 dark:text-white tracking-tight leading-[1.15] mb-5">{isEn ? "Your Website Should Work, Not Just Look Good" : "Website Anda Harus Bekerja, Bukan Hanya Terlihat Bagus"}</h2>
-                  <div className="section-divider mb-5" />
-                  <p className="text-primary-600 dark:text-primary-300 text-base leading-relaxed mb-6 max-w-lg">{isEn ? about.descriptionEn : about.descriptionId}</p>
-                  <Link to={`${lp}/about`} className="inline-flex items-center gap-2 text-primary-400 font-semibold text-sm hover:gap-3 transition-all accent-line">
-                    {isEn ? "Learn More" : "Selengkapnya"} <ArrowRight size={14} />
+              <div className="grid grid-cols-1 lg:grid-cols-[62fr_38fr] gap-[34px] lg:gap-[55px] items-center gsap-fade">
+                <div>
+                  <span className="font-pixel text-[8px] text-primary-400 tracking-[0.2em] uppercase mb-4 block">{isEn ? "About" : "Tentang"}</span>
+                  <h2 className="font-extrabold text-primary-900 dark:text-white tracking-tight leading-[1.1] mb-4" style={{ fontSize: "clamp(1.5rem, 3.5vw, 2rem)" }}>{isEn ? "Your Website Should Work, Not Just Look Good" : "Website Harus Bekerja, Bukan Hanya Terlihat Bagus"}</h2>
+                  <p className="text-[#666] dark:text-primary-300 text-[15px] leading-relaxed mb-6 max-w-md">{isEn ? about.descriptionEn : about.descriptionId}</p>
+                  <Link to={`${lp}/about`} className="inline-flex items-center gap-2 text-primary-400 font-semibold text-[13px] hover:gap-3 transition-all">
+                    {isEn ? "Learn More" : "Selengkapnya"} <ArrowRight size={13} />
                   </Link>
                 </div>
-                <div className="lg:col-span-2 gsap-fade">
-                  {about.image ? (
-                    <img src={about.image} alt="About" className="w-full aspect-[4/5] object-cover rounded-lg" loading="lazy" />
-                  ) : (
-                    <div className="w-full aspect-[4/5] bg-primary-100 dark:bg-primary-800 rounded-lg flex items-center justify-center"><span className="text-primary-300 text-sm">Image</span></div>
-                  )}
+                <div>
+                  {about.image ? <img src={about.image} alt="About" className="w-full aspect-[4/5] object-cover" loading="lazy" />
+                    : <div className="w-full aspect-[4/5] bg-primary-100 dark:bg-primary-800" />}
                 </div>
               </div>
             </SectionContent>
@@ -231,20 +245,20 @@ const Home = ({ lang = "en" }) => {
         )}
 
         {/* ═══ 6. PROCESS ═══ */}
-        <SectionWrapper bg="bg-primary-900 dark:bg-primary-900">
-          <SectionHeader label={isEn ? "Process" : "Proses"} title={isEn ? "How We Deliver Results" : "Cara Kami Bekerja"} className="[&_h2]:text-white [&_.eyebrow]:text-primary-400" />
+        <SectionWrapper surface="surface-deep">
+          <SectionHeader eyebrow={isEn ? "Process" : "Proses"} title={isEn ? "How We Deliver" : "Cara Kami Bekerja"} dark />
           <SectionContent>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-0 border-t border-white/10">
               {[
-                { en: "Discovery", id: "Riset", dEn: "Deep-dive into your brand, goals, and audience.", dId: "Mendalami brand, tujuan, dan audiens Anda." },
+                { en: "Discovery", id: "Riset", dEn: "Deep-dive into your brand, goals, and audience.", dId: "Mendalami brand, tujuan, dan audiens." },
                 { en: "Strategy", id: "Strategi", dEn: "Craft a clear roadmap with measurable milestones.", dId: "Menyusun roadmap dengan milestone terukur." },
                 { en: "Execution", id: "Eksekusi", dEn: "Build pixel-perfect, performant solutions.", dId: "Membangun solusi presisi dan performa tinggi." },
-                { en: "Launch", id: "Peluncuran", dEn: "Deploy, test, and provide ongoing optimization.", dId: "Deploy, testing, dan optimasi berkelanjutan." },
+                { en: "Launch", id: "Peluncuran", dEn: "Deploy, test, and optimize continuously.", dId: "Deploy, testing, dan optimasi berkelanjutan." },
               ].map((step, i) => (
-                <div key={i} className="gsap-fade p-6 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors">
-                  <span className="font-pixel text-[9px] text-primary-500 block mb-3">{(i + 1).toString().padStart(2, "0")}</span>
-                  <h3 className="font-bold text-lg text-white mb-2">{isEn ? step.en : step.id}</h3>
-                  <p className="text-primary-400 text-sm leading-relaxed">{isEn ? step.dEn : step.dId}</p>
+                <div key={i} className={`gsap-fade py-8 px-5 ${i < 3 ? "border-r border-white/10" : ""} border-b border-white/10`}>
+                  <span className="font-pixel text-[8px] text-primary-500 tracking-[0.2em] block mb-3">{(i + 1).toString().padStart(2, "0")}</span>
+                  <h3 className="font-bold text-[17px] text-white mb-2">{isEn ? step.en : step.id}</h3>
+                  <p className="text-primary-400 text-[13px] leading-relaxed">{isEn ? step.dEn : step.dId}</p>
                 </div>
               ))}
             </div>
@@ -252,13 +266,14 @@ const Home = ({ lang = "en" }) => {
         </SectionWrapper>
 
         {/* ═══ 7. CTA ═══ */}
-        <SectionWrapper bg="bg-white dark:bg-primary-950">
+        <SectionWrapper surface="surface-accent">
           <SectionContent>
-            <div className="gsap-fade rounded-xl p-12 lg:p-20 text-center" style={{ background: "linear-gradient(135deg, #001d32 0%, #003352 100%)" }}>
-              <h2 className="text-3xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight mb-5">{isEn ? "Ready to Elevate Your Digital Presence?" : "Siap Tingkatkan Kehadiran Digital Anda?"}</h2>
-              <p className="text-primary-300 text-base mb-8 max-w-md mx-auto">{isEn ? "Let's discuss your project and create something remarkable." : "Mari diskusikan proyek Anda dan bangun sesuatu yang luar biasa."}</p>
-              <Link to={`${lp}/contact`} className="inline-flex items-center gap-2 px-7 py-3.5 bg-primary-400 text-white font-bold text-sm rounded-md hover:bg-primary-300 transition-colors">
-                {isEn ? "Start a Project" : "Mulai Proyek"} <ArrowRight size={15} />
+            <div className="gsap-fade text-center max-w-xl mx-auto">
+              <span className="font-pixel text-[8px] text-primary-400 tracking-[0.2em] uppercase mb-4 block">{isEn ? "Let's Talk" : "Mari Bicara"}</span>
+              <h2 className="font-extrabold text-primary-900 dark:text-white tracking-tight leading-[1.1] mb-4" style={{ fontSize: "clamp(1.5rem, 3.5vw, 2rem)" }}>{isEn ? "Ready to Build Something Real?" : "Siap Membangun Sesuatu yang Nyata?"}</h2>
+              <p className="text-[#666] dark:text-primary-300 text-[15px] leading-relaxed mb-8">{isEn ? "Tell us about your project and let's create something remarkable." : "Ceritakan proyek Anda dan mari bangun sesuatu yang luar biasa."}</p>
+              <Link to={`${lp}/contact`} className="inline-flex items-center gap-2 px-6 py-3 bg-primary-400 text-white font-bold text-[13px] hover:bg-primary-500 transition-colors">
+                {isEn ? "Start a Project" : "Mulai Proyek"} <ArrowRight size={13} />
               </Link>
             </div>
           </SectionContent>
@@ -266,29 +281,6 @@ const Home = ({ lang = "en" }) => {
       </main>
 
       <Footer about={about} lang={lang} />
-    </div>
-  );
-};
-
-/* ── Portfolio Card ── */
-const PCard = ({ p, isEn, large = false }) => {
-  const ref = useRef(null);
-  return (
-    <div className="group rounded-lg overflow-hidden cursor-pointer border border-primary-100 dark:border-primary-800 hover:shadow-md transition-all duration-300 bg-white dark:bg-primary-800/20"
-      onClick={() => p.url && window.open(p.url.startsWith("http") ? p.url : `https://${p.url}`, "_blank")}
-      onMouseEnter={() => { if (ref.current) ref.current.style.opacity = "1"; }}
-      onMouseLeave={() => { if (ref.current) ref.current.style.opacity = "0"; }}>
-      <div className={`relative overflow-hidden ${large ? "aspect-[16/10]" : "aspect-[16/10]"}`}>
-        {p.image ? <img src={p.image} alt={isEn ? p.titleEn : p.titleId} className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500" loading="lazy" />
-          : <div className="w-full h-full bg-primary-50 dark:bg-primary-800 flex items-center justify-center"><Box size={28} className="text-primary-200" /></div>}
-        <div ref={ref} className="absolute inset-0 bg-primary-900/70 flex items-center justify-center opacity-0 transition-opacity duration-300">
-          <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center"><ArrowUpRight size={18} className="text-white" /></div>
-        </div>
-      </div>
-      <div className="p-4">
-        <span className="text-[10px] font-semibold text-primary-400 uppercase tracking-[0.12em] block mb-1">{isEn ? p.categoryEn : p.categoryId}</span>
-        <h3 className="font-bold text-primary-900 dark:text-white text-sm leading-snug">{isEn ? p.titleEn : p.titleId}</h3>
-      </div>
     </div>
   );
 };

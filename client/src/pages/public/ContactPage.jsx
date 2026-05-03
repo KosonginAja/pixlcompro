@@ -44,48 +44,46 @@ const ContactPage = ({ lang = "en" }) => {
     <div className="min-h-screen bg-white dark:bg-primary-900 font-sans transition-colors">
       <Helmet><title>{isEn ? "Contact — PixlCraft Studio" : "Kontak — PixlCraft Studio"}</title></Helmet>
       <Navbar about={about} lang={lang} />
-      <main className="pt-16">
-        {/* Header */}
-        <SectionWrapper bg="bg-primary-900" noPadding>
-          <div className="py-24 lg:py-32" style={{ background: "linear-gradient(135deg, #001d32 0%, #003352 100%)" }}>
-            <SectionContent>
-              <div className="max-w-2xl gsap-fade">
-                <span className="eyebrow text-primary-400 mb-4 block">{isEn ? "Contact" : "Kontak"}</span>
-                <h1 className="text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.1] mb-5">{isEn ? "Get In Touch" : "Hubungi Kami"}</h1>
-                <div className="section-divider mb-5" />
-                <p className="text-primary-300 text-base lg:text-lg leading-relaxed">{isEn ? "Tell us about your project and let's build something remarkable." : "Ceritakan proyek Anda dan mari bangun sesuatu yang luar biasa."}</p>
-              </div>
-            </SectionContent>
-          </div>
-        </SectionWrapper>
 
-        {/* Form: 40/60 */}
-        <SectionWrapper bg="bg-white dark:bg-primary-950">
+      <main className="pt-[55px]">
+        {/* Page header */}
+        <section className="surface-hero py-[55px] lg:py-[89px]">
+          <div className="max-w-7xl mx-auto px-5 md:px-8">
+            <span className="font-pixel text-[8px] text-primary-300 tracking-[0.2em] uppercase mb-4 block">{isEn ? "Contact" : "Kontak"}</span>
+            <h1 className="font-extrabold text-white tracking-tight leading-[1.08] mb-4" style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)" }}>{isEn ? "Get In Touch" : "Hubungi Kami"}</h1>
+            <p className="text-primary-200 text-[15px] leading-relaxed max-w-md">{isEn ? "Tell us about your project and let's build something remarkable." : "Ceritakan proyek Anda dan mari bangun sesuatu yang luar biasa."}</p>
+          </div>
+        </section>
+
+        {/* Form: 38/62 (info / form) */}
+        <SectionWrapper surface="surface-base">
           <SectionContent>
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-[38fr_62fr] gap-[34px] lg:gap-[55px] items-start">
               {/* Left — contact info */}
-              <div className="lg:col-span-2 gsap-fade">
-                <h2 className="text-xl font-extrabold text-primary-900 dark:text-white mb-6">{isEn ? "Contact Information" : "Informasi Kontak"}</h2>
-                <div className="space-y-5 mb-8">
+              <div className="gsap-fade">
+                <h2 className="font-extrabold text-primary-900 dark:text-white text-[18px] mb-[21px]">{isEn ? "Contact Details" : "Detail Kontak"}</h2>
+
+                <div className="space-y-0 border-t border-primary-100 dark:border-primary-800">
                   {about?.contactEmail && (
-                    <a href={`mailto:${about.contactEmail}`} className="flex items-start gap-3 group pb-4 border-b border-primary-100 dark:border-primary-800 hover:border-primary-300 transition-colors">
-                      <span className="text-[10px] font-semibold text-primary-400 shrink-0 w-10 mt-0.5">EMAIL</span>
-                      <span className="font-semibold text-primary-900 dark:text-white text-sm group-hover:text-primary-400 transition-colors">{about.contactEmail}</span>
+                    <a href={`mailto:${about.contactEmail}`} className="flex items-baseline gap-3 py-4 border-b border-primary-100 dark:border-primary-800 group">
+                      <span className="text-[10px] font-semibold text-[#999] dark:text-primary-500 uppercase tracking-[0.12em] shrink-0 w-[50px]">Email</span>
+                      <span className="font-semibold text-primary-900 dark:text-white text-[14px] group-hover:text-primary-400 transition-colors">{about.contactEmail}</span>
                     </a>
                   )}
                   {about?.contactPhone && (
-                    <a href={waNum ? `https://wa.me/${waNum}` : "#"} target="_blank" rel="noreferrer" className="flex items-start gap-3 group pb-4 border-b border-primary-100 dark:border-primary-800 hover:border-primary-300 transition-colors">
-                      <span className="text-[10px] font-semibold text-primary-400 shrink-0 w-10 mt-0.5">PHONE</span>
-                      <span className="font-semibold text-primary-900 dark:text-white text-sm group-hover:text-primary-400 transition-colors">{about.contactPhone}</span>
+                    <a href={waNum ? `https://wa.me/${waNum}` : "#"} target="_blank" rel="noreferrer" className="flex items-baseline gap-3 py-4 border-b border-primary-100 dark:border-primary-800 group">
+                      <span className="text-[10px] font-semibold text-[#999] dark:text-primary-500 uppercase tracking-[0.12em] shrink-0 w-[50px]">Phone</span>
+                      <span className="font-semibold text-primary-900 dark:text-white text-[14px] group-hover:text-primary-400 transition-colors">{about.contactPhone}</span>
                     </a>
                   )}
                 </div>
+
                 {about?.socials?.length > 0 && (
-                  <div>
-                    <span className="text-xs font-semibold text-primary-400 uppercase tracking-[0.12em] mb-3 block">{isEn ? "Follow Us" : "Ikuti Kami"}</span>
-                    <div className="flex gap-2">
+                  <div className="mt-8">
+                    <span className="font-pixel text-[7px] text-primary-400 tracking-[0.2em] uppercase mb-3 block">Social</span>
+                    <div className="flex gap-3">
                       {about.socials.map(({ label, href, url, icon }) => (
-                        <a key={label} href={href || url} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-md flex items-center justify-center text-primary-400 hover:text-primary-900 dark:hover:text-white hover:bg-primary-50 dark:hover:bg-primary-800 transition-all text-sm" aria-label={label}>
+                        <a key={label} href={href || url} target="_blank" rel="noreferrer" className="text-[#999] hover:text-primary-400 transition-colors text-sm" aria-label={label}>
                           <i className={icon}></i>
                         </a>
                       ))}
@@ -95,35 +93,34 @@ const ContactPage = ({ lang = "en" }) => {
               </div>
 
               {/* Right — form */}
-              <div className="lg:col-span-3 gsap-fade">
-                <div className="rounded-lg border border-primary-100 dark:border-primary-800 p-8 lg:p-10 bg-primary-50/30 dark:bg-primary-800/10">
-                  <h3 className="text-xs font-semibold text-primary-400 uppercase tracking-[0.12em] mb-8">{isEn ? "Send a message" : "Kirim pesan"}</h3>
-                  <div className="hidden"><input type="text" value={form.website} onChange={e => setForm({ ...form, website: e.target.value })} tabIndex="-1" autoComplete="off" /></div>
-                  <form onSubmit={submit} className="space-y-6">
-                    {[
-                      { l: isEn ? "Name" : "Nama", k: "name", t: "text", ph: "John Doe" },
-                      { l: "Email", k: "email", t: "email", ph: "john@company.com" },
-                      { l: isEn ? "Subject" : "Subjek", k: "subject", t: "text", ph: isEn ? "Project inquiry" : "Tanya proyek" },
-                    ].map(({ l, k, t, ph }) => (
-                      <div key={k}>
-                        <label className="block text-xs font-semibold text-primary-500 dark:text-primary-400 uppercase tracking-[0.1em] mb-2">{l}</label>
-                        <input type={t} required value={form[k]} onChange={e => setForm({ ...form, [k]: e.target.value })} placeholder={ph} className="w-full bg-transparent border-b border-primary-200 dark:border-primary-700 focus:border-primary-400 outline-none text-primary-900 dark:text-white placeholder:text-primary-300 dark:placeholder:text-primary-600 text-base pb-2 transition-colors" />
-                      </div>
-                    ))}
-                    <div>
-                      <label className="block text-xs font-semibold text-primary-500 dark:text-primary-400 uppercase tracking-[0.1em] mb-2">{isEn ? "Message" : "Pesan"}</label>
-                      <textarea required rows="4" value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} placeholder={isEn ? "Tell us about your project..." : "Ceritakan proyek Anda..."} className="w-full bg-transparent border-b border-primary-200 dark:border-primary-700 focus:border-primary-400 outline-none resize-none text-primary-900 dark:text-white placeholder:text-primary-300 dark:placeholder:text-primary-600 text-base pb-2 transition-colors" />
+              <div className="gsap-fade">
+                <span className="font-pixel text-[7px] text-primary-400 tracking-[0.2em] uppercase mb-[21px] block">{isEn ? "Send a message" : "Kirim pesan"}</span>
+                <div className="hidden"><input type="text" value={form.website} onChange={e => setForm({ ...form, website: e.target.value })} tabIndex="-1" autoComplete="off" /></div>
+                <form onSubmit={submit} className="space-y-6">
+                  {[
+                    { l: isEn ? "Name" : "Nama", k: "name", t: "text", ph: "John Doe" },
+                    { l: "Email", k: "email", t: "email", ph: "john@company.com" },
+                    { l: isEn ? "Subject" : "Subjek", k: "subject", t: "text", ph: isEn ? "Project inquiry" : "Tanya proyek" },
+                  ].map(({ l, k, t, ph }) => (
+                    <div key={k}>
+                      <label className="block text-[10px] font-semibold text-[#999] dark:text-primary-500 uppercase tracking-[0.12em] mb-2">{l}</label>
+                      <input type={t} required value={form[k]} onChange={e => setForm({ ...form, [k]: e.target.value })} placeholder={ph} className="w-full bg-transparent border-b border-primary-200 dark:border-primary-700 focus:border-primary-400 outline-none text-primary-900 dark:text-white placeholder:text-primary-200 dark:placeholder:text-primary-600 text-[15px] pb-3 transition-colors" />
                     </div>
-                    <button type="submit" disabled={loading} className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-primary-400 text-white font-bold text-sm rounded-md hover:bg-primary-500 transition-colors disabled:opacity-50">
-                      {loading ? (isEn ? "Sending..." : "Mengirim...") : (isEn ? "Send Message" : "Kirim Pesan")} {!loading && <ArrowRight size={14} />}
-                    </button>
-                  </form>
-                </div>
+                  ))}
+                  <div>
+                    <label className="block text-[10px] font-semibold text-[#999] dark:text-primary-500 uppercase tracking-[0.12em] mb-2">{isEn ? "Message" : "Pesan"}</label>
+                    <textarea required rows="4" value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} placeholder={isEn ? "Tell us about your project..." : "Ceritakan proyek Anda..."} className="w-full bg-transparent border-b border-primary-200 dark:border-primary-700 focus:border-primary-400 outline-none resize-none text-primary-900 dark:text-white placeholder:text-primary-200 dark:placeholder:text-primary-600 text-[15px] pb-3 transition-colors" />
+                  </div>
+                  <button type="submit" disabled={loading} className="inline-flex items-center gap-2 px-6 py-3 bg-primary-400 text-white font-bold text-[13px] hover:bg-primary-500 transition-colors disabled:opacity-50">
+                    {loading ? (isEn ? "Sending..." : "Mengirim...") : (isEn ? "Send Message" : "Kirim Pesan")} {!loading && <ArrowRight size={13} />}
+                  </button>
+                </form>
               </div>
             </div>
           </SectionContent>
         </SectionWrapper>
       </main>
+
       <Footer about={about} lang={lang} />
     </div>
   );

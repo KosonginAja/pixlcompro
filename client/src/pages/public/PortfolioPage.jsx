@@ -1,32 +1,10 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "../../lib/supabase";
 import { ArrowUpRight, Box } from "lucide-react";
 import { SectionWrapper, SectionContent } from "../../components/layout";
 import Navbar from "../../components/sections/Navbar";
 import Footer from "../../components/sections/Footer";
-
-const Card = ({ p, isEn, large = false }) => {
-  const ref = useRef(null);
-  return (
-    <div className="group rounded-lg overflow-hidden cursor-pointer border border-primary-100 dark:border-primary-800 bg-white dark:bg-primary-800/20 hover:shadow-md transition-all duration-300"
-      onClick={() => p.url && window.open(p.url.startsWith("http") ? p.url : `https://${p.url}`, "_blank")}
-      onMouseEnter={() => { if (ref.current) ref.current.style.opacity = "1"; }}
-      onMouseLeave={() => { if (ref.current) ref.current.style.opacity = "0"; }}>
-      <div className={`relative overflow-hidden ${large ? "aspect-[16/9]" : "aspect-[16/10]"}`}>
-        {p.image ? <img src={p.image} alt={isEn ? p.titleEn : p.titleId} className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500" loading="lazy" />
-          : <div className="w-full h-full bg-primary-50 dark:bg-primary-800 flex items-center justify-center"><Box size={28} className="text-primary-200" /></div>}
-        <div ref={ref} className="absolute inset-0 bg-primary-900/70 flex items-center justify-center opacity-0 transition-opacity duration-300">
-          <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center"><ArrowUpRight size={18} className="text-white" /></div>
-        </div>
-      </div>
-      <div className="p-4">
-        <span className="text-[10px] font-semibold text-primary-400 uppercase tracking-[0.12em] block mb-1">{isEn ? p.categoryEn : p.categoryId}</span>
-        <h3 className="font-bold text-primary-900 dark:text-white text-sm leading-snug">{isEn ? p.titleEn : p.titleId}</h3>
-      </div>
-    </div>
-  );
-};
 
 const PortfolioPage = ({ lang = "en" }) => {
   const isEn = lang === "en";
@@ -53,42 +31,50 @@ const PortfolioPage = ({ lang = "en" }) => {
     <div className="min-h-screen bg-white dark:bg-primary-900 font-sans transition-colors">
       <Helmet><title>{isEn ? "Portfolio — PixlCraft Studio" : "Portofolio — PixlCraft Studio"}</title></Helmet>
       <Navbar about={about} lang={lang} />
-      <main className="pt-16">
-        <SectionWrapper bg="bg-primary-900" noPadding>
-          <div className="py-24 lg:py-32" style={{ background: "linear-gradient(135deg, #001d32 0%, #003352 100%)" }}>
-            <SectionContent>
-              <div className="max-w-2xl gsap-fade">
-                <span className="eyebrow text-primary-400 mb-4 block">{isEn ? "Portfolio" : "Portofolio"}</span>
-                <h1 className="text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.1] mb-5">{isEn ? "Our Work" : "Karya Kami"}</h1>
-                <div className="section-divider mb-5" />
-                <p className="text-primary-300 text-base lg:text-lg leading-relaxed">{isEn ? "A showcase of projects we've brought to life." : "Kumpulan proyek yang telah kami wujudkan."}</p>
-              </div>
-            </SectionContent>
-          </div>
-        </SectionWrapper>
 
-        <SectionWrapper bg="bg-white dark:bg-primary-950">
+      <main className="pt-[55px]">
+        {/* Page header */}
+        <section className="surface-hero py-[55px] lg:py-[89px]">
+          <div className="max-w-7xl mx-auto px-5 md:px-8">
+            <span className="font-pixel text-[8px] text-primary-300 tracking-[0.2em] uppercase mb-4 block">{isEn ? "Portfolio" : "Portofolio"}</span>
+            <h1 className="font-extrabold text-white tracking-tight leading-[1.08] mb-4" style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)" }}>{isEn ? "Our Work" : "Karya Kami"}</h1>
+            <p className="text-primary-200 text-[15px] leading-relaxed max-w-md">{isEn ? "A showcase of projects we've brought to life." : "Kumpulan proyek yang telah kami wujudkan."}</p>
+          </div>
+        </section>
+
+        {/* Filter + grid */}
+        <SectionWrapper surface="surface-base">
           <SectionContent>
-            <div className="flex flex-wrap gap-2 mb-10 gsap-fade">
+            {/* Filters — text-only tabs */}
+            <div className="flex flex-wrap gap-5 mb-[34px] gsap-fade border-b border-primary-100 dark:border-primary-800 pb-4">
               {cats.map(c => (
-                <button key={c} onClick={() => setFilter(c)} className={`px-4 py-2 text-xs font-semibold rounded-md transition-all ${filter === c ? "bg-primary-400 text-white" : "bg-primary-50 dark:bg-primary-800 text-primary-600 dark:text-primary-300 hover:bg-primary-100 dark:hover:bg-primary-700"}`}>{c}</button>
+                <button key={c} onClick={() => setFilter(c)} className={`text-[13px] font-medium transition-colors pb-1 relative ${filter === c ? "text-primary-400 font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1.5px] after:bg-primary-400" : "text-[#999] dark:text-primary-500 hover:text-primary-900 dark:hover:text-white"}`}>{c}</button>
               ))}
             </div>
-            {filtered.length > 0 && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                {filtered.slice(0, 2).map(p => <div key={p._id} className="gsap-fade"><Card p={p} isEn={isEn} large /></div>)}
-              </div>
-            )}
-            {filtered.length > 2 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filtered.slice(2).map((p, i) => (
-                  <div key={p._id} className={`gsap-fade ${i % 5 === 0 ? "md:col-span-2" : ""}`}><Card p={p} isEn={isEn} large={i % 5 === 0} /></div>
-                ))}
-              </div>
-            )}
+
+            {/* Grid — asymmetric */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+              {filtered.map((p, i) => (
+                <div key={p._id} className={`gsap-fade group cursor-pointer ${i === 0 ? "lg:col-span-2" : ""}`}
+                  onClick={() => p.url && window.open(p.url.startsWith("http") ? p.url : `https://${p.url}`, "_blank")}>
+                  <div className={`relative overflow-hidden mb-3 ${i === 0 ? "aspect-[21/9]" : "aspect-[16/10]"}`}>
+                    {p.image ? <img src={p.image} alt={isEn ? p.titleEn : p.titleId} className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" loading="lazy" />
+                      : <div className="w-full h-full bg-primary-100 dark:bg-primary-800 flex items-center justify-center"><Box size={24} className="text-primary-200" /></div>}
+                    <div className="absolute top-3 right-3 w-7 h-7 bg-white/90 dark:bg-primary-900/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"><ArrowUpRight size={13} className="text-primary-900 dark:text-white" /></div>
+                  </div>
+                  <div className="flex items-baseline justify-between gap-4">
+                    <div>
+                      <span className="font-pixel text-[7px] text-primary-400 tracking-[0.2em] uppercase">{isEn ? p.categoryEn : p.categoryId}</span>
+                      <h3 className="font-bold text-primary-900 dark:text-white text-[15px] mt-0.5">{isEn ? p.titleEn : p.titleId}</h3>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </SectionContent>
         </SectionWrapper>
       </main>
+
       <Footer about={about} lang={lang} />
     </div>
   );
